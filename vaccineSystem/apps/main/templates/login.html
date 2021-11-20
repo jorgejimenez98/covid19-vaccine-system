@@ -3,185 +3,143 @@
 <!DOCTYPE html>
 
 <html clas s="no-js" lang="en">
-  <head>
-    <meta charset="utf-8" />
 
-    <title>Login | Magnews</title>
+<head>
+  <meta charset="utf-8" />
 
-    <meta
-      name="description"
-      content="ProUI is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest."
-    />
-    <meta name="author" content="pixelcave" />
-    <meta name="robots" content="noindex, nofollow" />
-    <meta
-      name="viewport"
-      content="width=device-width,initial-scale=1.0,user-scalable=0"
-    />
+  <title>Login | Magnews</title>
 
-    <!-- Icons -->
-    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-    <link rel="shortcut icon" href="{%static 'img/favicon.png' %}" />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon57.png' %}"
-      sizes="57x57"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon72.png' %}"
-      sizes="72x72"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon76.png' %}"
-      sizes="76x76"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon114.png' %}"
-      sizes="114x114"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon120.png' %}"
-      sizes="120x120"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon144.png' %}"
-      sizes="144x144"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon152.png' %}"
-      sizes="152x152"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon180.png' %}"
-      sizes="180x180"
-    />
-    <!-- END Icons -->
+  <meta name="description"
+    content="ProUI is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest." />
+  <meta name="author" content="pixelcave" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0" />
 
-    <!-- Stylesheets -->
-    <!-- Bootstrap is included in its original form, unaltered -->
-    <link rel="stylesheet" href="{%static '/css/bootstrap.min.css' %}" />
+  <!-- Icons -->
+  <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+  <link rel="shortcut icon" href="{%static 'img/favicon.png' %}" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon57.png' %}" sizes="57x57" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon72.png' %}" sizes="72x72" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon76.png' %}" sizes="76x76" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon114.png' %}" sizes="114x114" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon120.png' %}" sizes="120x120" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon144.png' %}" sizes="144x144" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon152.png' %}" sizes="152x152" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon180.png' %}" sizes="180x180" />
+  <!-- END Icons -->
 
-    <!-- Related styles of various icon packs and plugins -->
-    <link rel="stylesheet" href="{%static 'css/plugins.css' %}" />
+  <!-- Stylesheets -->
+  <!-- Bootstrap is included in its original form, unaltered -->
+  <link rel="stylesheet" href="{%static '/css/bootstrap.min.css' %}" />
 
-    <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
-    <link rel="stylesheet" href="{%static '/css/main.css' %}" />
+  <!-- Related styles of various icon packs and plugins -->
+  <link rel="stylesheet" href="{%static 'css/plugins.css' %}" />
 
-    <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+  <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+  <link rel="stylesheet" href="{%static '/css/main.css' %}" />
 
-    <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
-    <link rel="stylesheet" href="{%static 'css/themes.css' %}" />
-    <!-- END Stylesheets -->
+  <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
 
-    <!-- Modernizr (browser feature detection library) -->
-    <script src="{%static 'js/vendor/modernizr.min.js' %}"></script>
-  </head>
+  <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+  <link rel="stylesheet" href="{%static 'css/themes.css' %}" />
+  <!-- END Stylesheets -->
 
-  <body>
-    <!-- Login Alternative Row -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <!-- Login Container -->
-          <div id="login-container" style="margin-bottom: 50px">
-            <!-- Login Title -->
-            <div class="login-title text-center">
-              <h1><strong>Acceder al Sistema</strong></h1>
-            </div>
-            <!-- END Login Title -->
+  <!-- Modernizr (browser feature detection library) -->
+  <script src="{%static 'js/vendor/modernizr.min.js' %}"></script>
+</head>
 
-            <!-- Login Block -->
-            <div class="block push-bit">
-              <!-- Login Form -->
-              <form
-                action="{% url 'loginView' %}"
-                method="post"
-                id="form-validation"
-                class="form-horizontal"
-              >
-                {% csrf_token %}
-                <div class="form-group">
-                  <div class="col-xs-12">
-                    <div class="input-group">
-                      <span class="input-group-addon"
-                        ><i class="gi gi-envelope"></i
-                      ></span>
-                      <input
-                        type="text"
-                        id="val_username"
-                        name="val_username"
-                        class="form-control input-lg"
-                        placeholder="Nombre de Usuario"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-xs-12">
-                    <div class="input-group">
-                      <span class="input-group-addon"
-                        ><i class="gi gi-asterisk"></i
-                      ></span>
-                      <input
-                        type="password"
-                        id="val_password"
-                        name="val_password"
-                        class="form-control input-lg"
-                        placeholder="Contraseña"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group form-actions">
-                  <div class="col-xs-8 text-right">
-                    <button
-                      type="submit"
-                      class="btn btn-sm btn-primary float-rigth"
-                    >
-                      <i class="fa fa-angle-right"></i> Acceder
-                    </button>
-                  </div>
-                </div>
-              </form>
-              <!-- END Login Form -->
-
-              <!-- END Register Form -->
-            </div>
-            <!-- END Login Block -->
+<body>
+  <!-- Login Alternative Row -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Login Container -->
+        <div id="login-container" style="margin-bottom: 50px">
+          <!-- Login Title -->
+          <div class="login-title text-center">
+            <h1><strong>Acceder al Sistema</strong></h1>
           </div>
-          <!-- END Login Container -->
+          <!-- END Login Title -->
+
+
+          <!-- Error Message Section -->
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} 
+                              alert-danger 
+                            {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+                              alert-success 
+                            {% endif %} p-2" role="alert">
+            {{ message }}
+          </div>
+          {% endfor %}
+          {% endif %}
+          <!-- End Error Message Section -->
+
+          <!-- Login Block -->
+          <div class="block push-bit">
+            <!-- Login Form -->
+            <form action="{% url 'loginView' %}" method="post" id="form-validation" class="form-horizontal">
+              {% csrf_token %}
+              <div class="form-group">
+                <div class="col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="gi gi-envelope"></i></span>
+                    <input type="text" id="val_username" name="val_username"  value="{{ username }}" class="form-control input-lg"
+                      placeholder="Nombre de Usuario" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-xs-12">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                    <input type="password" id="val_password" name="val_password" value="{{ password }}" class="form-control input-lg"
+                      placeholder="Contraseña" />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group form-actions">
+                <div class="col-xs-8 text-right">
+                  <button type="submit" class="btn btn-sm btn-primary float-rigth">
+                    <i class="fa fa-angle-right"></i> Acceder
+                  </button>
+                </div>
+              </div>
+            </form>
+            <!-- END Login Form -->
+
+            <!-- END Register Form -->
+          </div>
+          <!-- END Login Block -->
         </div>
+        <!-- END Login Container -->
       </div>
     </div>
-    <!-- END Login Alternative Row -->
+  </div>
+  <!-- END Login Alternative Row -->
 
-    <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
-    <script src="{%static 'js/vendor/jquery.min.js' %}"></script>
-    <script src="{%static 'js/vendor/bootstrap.min.js' %}"></script>
-    <script src="{%static 'js/plugins.js' %}"></script>
-    <script src="{%static 'js/app.js' %}"></script>
+  <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+  <script src="{%static 'js/vendor/jquery.min.js' %}"></script>
+  <script src="{%static 'js/vendor/bootstrap.min.js' %}"></script>
+  <script src="{%static 'js/plugins.js' %}"></script>
+  <script src="{%static 'js/app.js' %}"></script>
 
-    <!-- Load and execute javascript code used only in this page -->
-    <script src="{%static 'js/pages/login.js' %}"></script>
-    <script>
-      $(function () {
-        Login.init();
-      });
-    </script>
+  <!-- Load and execute javascript code used only in this page -->
+  <script src="{%static 'js/pages/login.js' %}"></script>
+  <script>
+    $(function () {
+      Login.init();
+    });
+  </script>
 
-    <!-- Validations -->
-    <script src="{% static 'js/validators/loginvalidator.js' %}"></script>
-    <script>
-      $(function () {
-        FormsValidation.init();
-      });
-    </script>
-  </body>
+  <!-- Validations -->
+  <script src="{% static 'js/validators/loginvalidator.js' %}"></script>
+  <script>
+    $(function () {
+      FormsValidation.init();
+    });
+  </script>
+</body>
+
 </html>
