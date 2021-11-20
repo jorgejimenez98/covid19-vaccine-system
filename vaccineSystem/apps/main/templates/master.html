@@ -3,267 +3,183 @@
 <!DOCTYPE html>
 
 <html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8" />
 
-    <title>Admin Panel</title>
+<head>
+  <meta charset="utf-8" />
 
-    <meta
-      name="description"
-      content="ProUI is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest."
-    />
-    <meta name="author" content="pixelcave" />
-    <meta name="robots" content="noindex, nofollow" />
-    <meta
-      name="viewport"
-      content="width=device-width,initial-scale=1.0,user-scalable=0"
-    />
+  <title>Admin Panel</title>
 
-    <!-- Icons -->
-    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
-    <link rel="shortcut icon" href="{%static 'img/favicon.png' %}" />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon57.png' %}"
-      sizes="57x57"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon72.png' %}"
-      sizes="72x72"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon76.png' %} "
-      sizes="76x76"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon114.png' %}"
-      sizes="114x114"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon120.png' %}"
-      sizes="120x120"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon144.png' %}"
-      sizes="144x144"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon152.png' %}"
-      sizes="152x152"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="{%static 'img/icon180.png' %}"
-      sizes="180x180"
-    />
-    <!-- END Icons -->
+  <meta name="description"
+    content="ProUI is a Responsive Bootstrap Admin Template created by pixelcave and published on Themeforest." />
+  <meta name="author" content="pixelcave" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0" />
 
-    <!-- Stylesheets -->
-    <!-- Bootstrap is included in its original form, unaltered -->
-    <link rel="stylesheet" href="{%static 'css/bootstrap.min.css' %}" />
+  <!-- Icons -->
+  <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+  <link rel="shortcut icon" href="{%static 'img/favicon.png' %}" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon57.png' %}" sizes="57x57" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon72.png' %}" sizes="72x72" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon76.png' %} " sizes="76x76" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon114.png' %}" sizes="114x114" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon120.png' %}" sizes="120x120" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon144.png' %}" sizes="144x144" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon152.png' %}" sizes="152x152" />
+  <link rel="apple-touch-icon" href="{%static 'img/icon180.png' %}" sizes="180x180" />
+  <!-- END Icons -->
 
-    <!-- Related styles of various icon packs and plugins -->
-    <link rel="stylesheet" href="{%static 'css/plugins.css' %}" />
+  <!-- Stylesheets -->
+  <!-- Bootstrap is included in its original form, unaltered -->
+  <link rel="stylesheet" href="{%static 'css/bootstrap.min.css' %}" />
 
-    <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
-    <link rel="stylesheet" href="{%static 'css/main.css' %}" />
+  <!-- Related styles of various icon packs and plugins -->
+  <link rel="stylesheet" href="{%static 'css/plugins.css' %}" />
 
-    <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
+  <!-- The main stylesheet of this template. All Bootstrap overwrites are defined in here -->
+  <link rel="stylesheet" href="{%static 'css/main.css' %}" />
 
-    <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
-    <link rel="stylesheet" href="{%static 'css/themes.css' %}" />
-    <!-- END Stylesheets -->
+  <!-- Include a specific file here from css/themes/ folder to alter the default theme of the template -->
 
-    <!-- Modernizr (browser feature detection library) -->
-    <script src="{%static 'js/vendor/modernizr.min.js' %}"></script>
+  <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
+  <link rel="stylesheet" href="{%static 'css/themes.css' %}" />
+  <!-- END Stylesheets -->
 
-    {% block headBlock %} {% endblock %}
-  </head>
+  <!-- Modernizr (browser feature detection library) -->
+  <script src="{%static 'js/vendor/modernizr.min.js' %}"></script>
 
-  <body>
-    <div id="page-wrapper">
-      <div class="preloader themed-background">
-        <h1 class="push-top-bottom text-light text-center">
-          <strong>Admin</strong>Panel
-        </h1>
-        <div class="inner">
-          <h3 class="text-light visible-lt-ie10"><strong>Loading..</strong></h3>
-          <div class="preloader-spinner hidden-lt-ie10"></div>
-        </div>
+  {% block headBlock %} {% endblock %}
+</head>
+
+<body>
+  <div id="page-wrapper">
+    <div class="preloader themed-background">
+      <h1 class="push-top-bottom text-light text-center">
+        <strong>Admin</strong>Panel
+      </h1>
+      <div class="inner">
+        <h3 class="text-light visible-lt-ie10"><strong>Loading..</strong></h3>
+        <div class="preloader-spinner hidden-lt-ie10"></div>
       </div>
+    </div>
 
-      <div
-        id="page-container"
-        class="sidebar-partial sidebar-visible-lg sidebar-no-animations"
-      >
-        <!-- Main Sidebar -->
-        <div id="sidebar">
-          <!-- Wrapper for scrolling functionality -->
-          <div id="sidebar-scroll">
-            <!-- Sidebar Content -->
-            <div class="sidebar-content">
-              <!-- Brand -->
-              <a href="/" class="sidebar-brand">
-                <i class="gi gi-flash"></i
-                ><span class="sidebar-nav-mini-hide"
-                  ><strong>Admin</strong>Panel</span
-                >
-              </a>
-              <!-- END Brand -->
+    <div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
+      <!-- Main Sidebar -->
+      <div id="sidebar">
+        <!-- Wrapper for scrolling functionality -->
+        <div id="sidebar-scroll">
+          <!-- Sidebar Content -->
+          <div class="sidebar-content">
+            <!-- Brand -->
+            <a href="/" class="sidebar-brand">
+              <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Admin</strong>Panel</span>
+            </a>
+            <!-- END Brand -->
 
-              <!-- User Info -->
-              <div
-                class="
+            <!-- User Info -->
+            <div class="
                   sidebar-section sidebar-user
                   clearfix
                   sidebar-nav-mini-hide
-                "
-              >
-                <div class="sidebar-user-avatar">
-                  <a href="page_ready_user_profile.html">
-                    <img
-                      src="{%static 'img/placeholders/avatars/avatar2.jpg'%}"
-                      alt="avatar"
-                    />
-                  </a>
-                </div>
-                <div class="sidebar-user-name">{{user.username}}</div>
-                <div class="sidebar-user-links">
-                  <a
-                    href="#"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="Profile"
-                    ><i class="gi gi-user"></i
-                  ></a>
-
-                  <!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.html in PHP version) -->
-
-                  <a
-                    href="#"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="Logout"
-                    ><i class="gi gi-exit"></i
-                  ></a>
-                </div>
-              </div>
-              <!-- END User Info -->
-
-              <!-- Sidebar Navigation -->
-              <ul class="sidebar-nav">
-                <li>
-                  <a href="/" class="active"
-                    ><i class="gi gi-stopwatch sidebar-nav-icon"></i
-                    ><span class="sidebar-nav-mini-hide">Dashboard</span></a
-                  >
-                </li>
-
-                <li class="sidebar-header">
-                  <span class="sidebar-header-options clearfix"
-                    ><a
-                      href="javascript:void(0)"
-                      data-toggle="tooltip"
-                      title="Quick Settings"
-                      ><i class="gi gi-settings"></i></a
-                  ></span>
-                  <span class="sidebar-header-title">News section</span>
-                </li>
-              </ul>
-              <!-- END Sidebar Navigation -->
-            </div>
-            <!-- END Sidebar Content -->
-          </div>
-          <!-- END Wrapper for scrolling functionality -->
-        </div>
-        <!-- END Main Sidebar -->
-
-        <!-- Main Container -->
-        <div id="main-container">
-          <header class="navbar navbar-default">
-            <!-- Left Header Navigation -->
-            <ul class="nav navbar-nav-custom">
-              <!-- Main Sidebar Toggle Button -->
-              <li>
-                <a
-                  href="javascript:void(0)"
-                  onclick="App.sidebar('toggle-sidebar');this.blur();"
-                >
-                  <i class="fa fa-bars fa-fw"></i>
+                ">
+              <div class="sidebar-user-avatar">
+                <a href="#">
+                  <img src="{% static 'img/placeholders/avatars/avatar2.jpg'%}" alt="avatar" />
                 </a>
-              </li>
-              <!-- END Main Sidebar Toggle Button -->
-            </ul>
-            <!-- END Left Header Navigation -->
-
-            <!-- Search Form -->
-            <form
-              action="page_ready_search_results.html"
-              method="post"
-              class="navbar-form-custom"
-            >
-              <div class="form-group">
-                <input
-                  type="text"
-                  id="top-search"
-                  name="top-search"
-                  class="form-control"
-                  placeholder="Search.."
-                />
               </div>
-            </form>
-            <!-- END Search Form -->
-          </header>
-          <!-- END Header -->
+              <div class="sidebar-user-name">{{user.username}}</div>
+              <div class="sidebar-user-links">
 
-          <!-- Page content -->
-          <div id="page-content">{% block mainblock%} {% endblock %}</div>
-          <!-- END Page Content -->
+                <!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.html in PHP version) -->
 
-          <!-- Footer -->
-          <footer class="clearfix">
-            <div class="pull-right">
-              Crafted with <i class="fa fa-heart text-danger"></i> by
-              <a href="#" target="_blank">me</a>
+                <a href="{% url 'logoutView' %}" data-toggle="tooltip" data-placement="bottom" title="Logout"><i
+                    class="gi gi-exit"></i></a>
+              </div>
             </div>
-            <div class="pull-left">
-              <span id="year-copy"></span> &copy;
-              <a href="http://goo.gl/TDOSuC" target="_blank">Denis Baryola</a>
-            </div>
-          </footer>
-          <!-- END Footer -->
+            <!-- END User Info -->
+
+            <!-- Sidebar Navigation -->
+            <ul class="sidebar-nav">
+              <li>
+                <a href="/" class="active"><i class="gi gi-stopwatch sidebar-nav-icon"></i><span
+                    class="sidebar-nav-mini-hide">Dashboard</span></a>
+              </li>
+
+              <li class="sidebar-header">
+                <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip"
+                    title="Quick Settings"><i class="gi gi-settings"></i></a></span>
+                <span class="sidebar-header-title">News section</span>
+              </li>
+            </ul>
+            <!-- END Sidebar Navigation -->
+          </div>
+          <!-- END Sidebar Content -->
         </div>
-        <!-- END Main Container -->
+        <!-- END Wrapper for scrolling functionality -->
       </div>
-      <!-- END Page Container -->
+      <!-- END Main Sidebar -->
+
+      <!-- Main Container -->
+      <div id="main-container">
+        <header class="navbar navbar-default">
+          <!-- Left Header Navigation -->
+          <ul class="nav navbar-nav-custom">
+            <!-- Main Sidebar Toggle Button -->
+            <li>
+              <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');this.blur();">
+                <i class="fa fa-bars fa-fw"></i>
+              </a>
+            </li>
+            <!-- END Main Sidebar Toggle Button -->
+          </ul>
+          <!-- END Left Header Navigation -->
+
+          <h4 class="text-muted mt-2">Sistema de gestión de vacunas</h4>
+        </header>
+        <!-- END Header -->
+
+        <!-- Page content -->
+        <div id="page-content">{% block mainblock%} {% endblock %}</div>
+        <!-- END Page Content -->
+
+        <!-- Footer -->
+        <footer class="clearfix">
+          <div class="pull-right">
+            Crafted with <i class="fa fa-heart text-danger"></i> by
+            <a href="#" target="_blank">me</a>
+          </div>
+          <div class="pull-left">
+            <span id="year-copy"></span> &copy;
+            <a href="http://goo.gl/TDOSuC" target="_blank">Denis Baryola</a>
+          </div>
+        </footer>
+        <!-- END Footer -->
+      </div>
+      <!-- END Main Container -->
     </div>
-    <!-- END Page Wrapper -->
+    <!-- END Page Container -->
+  </div>
+  <!-- END Page Wrapper -->
 
-    <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
-    <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
+  <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
+  <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
 
-    <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
-    <script src="{%static 'js/vendor/jquery.min.js' %}"></script>
-    <script src="{%static 'js/vendor/bootstrap.min.js' %}"></script>
-    <script src="{%static 'js/plugins.js' %}"></script>
-    <script src="{%static 'js/app.js' %}"></script>
+  <!-- jQuery, Bootstrap.js, jQuery plugins and Custom JS code -->
+  <script src="{%static 'js/vendor/jquery.min.js' %}"></script>
+  <script src="{%static 'js/vendor/bootstrap.min.js' %}"></script>
+  <script src="{%static 'js/plugins.js' %}"></script>
+  <script src="{%static 'js/app.js' %}"></script>
 
-    <!-- Google Maps API Key (you will have to obtain a Google Maps API key to use Google Maps) -->
-    <script src="{%static 'js/helpers/gmaps.min.js' %}"></script>
+  <!-- Google Maps API Key (you will have to obtain a Google Maps API key to use Google Maps) -->
+  <script src="{%static 'js/helpers/gmaps.min.js' %}"></script>
 
-    {% block footerblock%}
-    <script src="{%static 'js/pages/index.js'%}"></script>
-    <script>
-      $(function () {
-        Index.init();
-      });
-    </script>
-    {% endblock %}
-  </body>
+  {% block footerblock%}
+  <script src="{%static 'js/pages/index.js'%}"></script>
+  <script>
+    $(function () {
+      Index.init();
+    });
+  </script>
+  {% endblock %}
+</body>
+
 </html>
