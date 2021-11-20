@@ -103,7 +103,7 @@
               <form
                 action="{% url 'loginView' %}"
                 method="post"
-                id="form-login"
+                id="form-validation"
                 class="form-horizontal"
               >
                 {% csrf_token %}
@@ -115,8 +115,8 @@
                       ></span>
                       <input
                         type="text"
-                        id="username"
-                        name="username"
+                        id="val_username"
+                        name="val_username"
                         class="form-control input-lg"
                         placeholder="Nombre de Usuario"
                       />
@@ -131,8 +131,8 @@
                       ></span>
                       <input
                         type="password"
-                        id="password"
-                        name="password"
+                        id="val_password"
+                        name="val_password"
                         class="form-control input-lg"
                         placeholder="Contraseña"
                       />
@@ -173,6 +173,14 @@
     <script>
       $(function () {
         Login.init();
+      });
+    </script>
+
+    <!-- Validations -->
+    <script src="{% static 'js/validators/loginvalidator.js' %}"></script>
+    <script>
+      $(function () {
+        FormsValidation.init();
       });
     </script>
   </body>
