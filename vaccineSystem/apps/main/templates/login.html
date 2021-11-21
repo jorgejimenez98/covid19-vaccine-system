@@ -66,15 +66,19 @@
           {% if messages %}
           {% for message in messages %}
           <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} 
-                              alert-danger 
-                            {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
-                              alert-success 
-                            {% endif %} p-2" role="alert">
+                      alert-danger 
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+                      alert-success 
+                    {% endif %} p-2 alert-dismissible" role="alert">
             {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
           {% endfor %}
           {% endif %}
           <!-- End Error Message Section -->
+
 
           <!-- Login Block -->
           <div class="block push-bit">
@@ -85,8 +89,8 @@
                 <div class="col-xs-12">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="gi gi-envelope"></i></span>
-                    <input type="text" id="val_username" name="val_username"  value="{{ username }}" class="form-control input-lg"
-                      placeholder="Nombre de Usuario" />
+                    <input type="text" id="val_username" name="val_username" value="{{ username }}"
+                      class="form-control input-lg" placeholder="Nombre de Usuario" />
                   </div>
                 </div>
               </div>
@@ -94,8 +98,8 @@
                 <div class="col-xs-12">
                   <div class="input-group">
                     <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
-                    <input type="password" id="val_password" name="val_password" value="{{ password }}" class="form-control input-lg"
-                      placeholder="Contraseña" />
+                    <input type="password" id="val_password" name="val_password" value="{{ password }}"
+                      class="form-control input-lg" placeholder="Contraseña" />
                   </div>
                 </div>
               </div>
