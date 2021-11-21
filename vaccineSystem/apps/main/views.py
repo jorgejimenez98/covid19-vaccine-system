@@ -17,6 +17,10 @@ def logoutView(request):
     return redirect('homeView')
 
 
+def error404View(request):
+    return render(request, 'error403.html')
+
+
 def loginView(request):
     # Init Context
     context = {"username": "", "password": ""}
@@ -25,7 +29,7 @@ def loginView(request):
         username = request.POST.get('val_username')
         password = request.POST.get('val_password')
         try:
-            # Update context 
+            # Update context
             context['username'] = username
             context['password'] = password
             # Get user
