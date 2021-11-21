@@ -4,13 +4,23 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from ..main.decorators import checkUserAccess
 from ..main.errorFunctions import *
+from .formclass import UserForm
 
 
+""" USERS LIST """
 @login_required(login_url='/login')
 @checkUserAccess(rol='ADMIN', error_url='/403')
 def userListView(request):
     context = {"users": get_user_model().objects.all()}
     return render(request, 'users/list.html', context)
+
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def userAddView(request):
+    context = {"user": UserForm("", "", "", "", "")}
+    return render(request, 'users/add.html', context)
 
 
 @login_required(login_url='/login')
