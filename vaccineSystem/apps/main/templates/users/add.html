@@ -1,0 +1,45 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block mainblock %}
+
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Usuarios<br><small>Formulario para insertar usuarios al sistema</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Tabla</li>
+    <li><a href="{% url 'userListView' %}">Usuarios</a></li>
+    <li>Insertar</li>
+</ul>
+<!-- END Datatables Header -->
+
+<!-- Error Message Section -->
+{% if messages %}
+{% for message in messages %}
+<div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} 
+                      alert-danger 
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+                      alert-success 
+                    {% endif %} p-2 alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+<!-- End Error Message Section -->
+
+
+
+
+{% endblock%}
+{% block footerblock%}
+
+
+{% endblock%}
