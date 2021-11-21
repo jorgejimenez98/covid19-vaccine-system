@@ -24,6 +24,8 @@ def userAddView(request):
     # Init Context
     context = {"user": UserForm("", "", "", "", "")}
     # Render User Form
+    if request.method == 'POST':
+        print('AAA', request.POST)
     return render(request, 'users/add.html', context)
 
 
