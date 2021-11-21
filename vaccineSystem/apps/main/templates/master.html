@@ -42,6 +42,7 @@
 
   <!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
   <link rel="stylesheet" href="{%static 'css/themes.css' %}" />
+  <link rel="stylesheet" href="{%static 'css/fonts/icons.min.css' %}" />
   <!-- END Stylesheets -->
 
   <!-- Modernizr (browser feature detection library) -->
@@ -71,7 +72,7 @@
           <div class="sidebar-content">
             <!-- Brand -->
             <a href="/" class="sidebar-brand">
-              <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Admin</strong>Panel</span>
+              <i class="fa fa-syringe"></i><span class="sidebar-nav-mini-hide"><strong>Admin</strong>Panel</span>
             </a>
             <!-- END Brand -->
 
@@ -105,10 +106,15 @@
               </li>
 
               <li class="sidebar-header">
-                <span class="sidebar-header-options clearfix"><a href="javascript:void(0)" data-toggle="tooltip"
-                    title="Quick Settings"><i class="gi gi-settings"></i></a></span>
-                <span class="sidebar-header-title">News section</span>
+                <span class="sidebar-header-title">Gestiones del Sistema</span>
               </li>
+
+              {% if request.user.is_staff %}
+              <li>
+                <a href="/users/list"><i class="fa fa-users sidebar-nav-icon"></i><span
+                    class="sidebar-nav-mini-hide">Gestionar Usuarios</span></a>
+              </li>
+              {% endif %}
             </ul>
             <!-- END Sidebar Navigation -->
           </div>
