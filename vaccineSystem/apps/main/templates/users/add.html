@@ -37,9 +37,108 @@
 
 
 
+<!-- Form Validation Example Block -->
+<div class="block">
+    <!-- Form Validation Example Title -->
+    <div class="block-title">
+        <h2><strong>Form Validation</strong> Example</h2>
+    </div>
+    <!-- END Form Validation Example Title -->
+
+    <!-- Form Validation Example Content -->
+    <form id="form-validation" action="{% url 'userAddView' %}" method="post" class="form-horizontal form-bordered">
+        {% csrf_token %}
+        <fieldset>
+
+            <!-- NAME -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="val_name">Nombre Completo <span
+                        class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" id="val_name" name="val_name" class="form-control"
+                            placeholder="Escribe aquí el nombre..">
+                        <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="val_username">Nombre de Usuario <span
+                        class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" id="val_username" name="val_username" class="form-control"
+                            placeholder="Escribe aquí el nombre de usuario..">
+                        <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROL -->
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="val_rol">Rol de Usuario <span
+                        class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <select id="val_rol" name="val_rol" class="form-control">
+                        <option value="">Seleccione un Rol</option>
+                        <option value="ADMIN">Administrador</option>
+                        <option value="SPECIALIST">Especialista</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <!-- PASSWORD -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="val_password">Contraseña <span
+                        class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="password" id="val_password" name="val_password" class="form-control"
+                            placeholder="Escribe aquí la contraseña">
+                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONFIRM PASSWORD -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="val_confirm_password">Confirmar Contraseña <span
+                        class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="password" id="val_confirm_password" name="val_confirm_password"
+                            class="form-control" placeholder="confirma aquí!">
+                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-group form-actions text-right">
+            <div class="col-md-8 col-md-offset-4">
+                <a href="{% url 'userListView' %}" class="btn btn-sm btn-default">Cancelar</a>
+                <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Resetear
+                    Formulario</button>
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-arrow-right"></i> Insertar
+                    Usuario</button>
+            </div>
+        </div>
+    </form>
+    <!-- END Form Validation Example Content -->
+
+</div>
+
+
 
 {% endblock%}
 {% block footerblock%}
-
+<!-- Load and execute javascript code used only in this page -->
+<script src="{% static 'js/validators/adduservalidator.js' %}"></script>
+<script>$(function () { FormsValidation.init(); });</script>
 
 {% endblock%}
