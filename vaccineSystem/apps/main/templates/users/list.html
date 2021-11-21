@@ -1,6 +1,10 @@
 {% extends 'master.html' %}
 {% load static %}
 
+{% block headBlock %}
+<link rel="stylesheet" href="{% static 'table/datatable.min.css' %}" />
+<link rel="stylesheet" href="{% static 'table/responsive.datatables.min.css' %}" />
+{% endblock %}
 {% block mainblock %}
 
 <!-- Datatables Header -->
@@ -43,7 +47,8 @@
         </a>
     </div>
     <div class="table-responsive">
-        <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+        <table id="example" class="table table-vcenter table-condensed table-bordered" cellspacing="0"
+            style="width: 100%; border: none">
             <thead>
                 <tr>
                     <th class="text-center">Nombre Completo</th>
@@ -123,10 +128,17 @@
 
 {% endblock%}
 {% block footerblock%}
-<!-- Load and execute javascript code used only in this page -->
-<script src="{% static 'js/pages/tablesDatatables.js' %}"></script>
-<script>$(function () { TablesDatatables.init(); });</script>
 
+<!-- Table -->
+<script src="{% static 'table/datatable.min.js' %}"></script>
+<script src="{% static 'table/responsive.datatable.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            responsive: true
+        });
+    });
+</script>
 <!-- PAssing data to modal script -->
 <script>
     $('#exampleModalCenter').on('show.bs.modal', function (event) {
@@ -140,5 +152,6 @@
         modal.find('.modal-comfirm-delete').attr("href", "/users/delete/" + userId + "/");
     })
 </script>
+
 
 {% endblock%}
