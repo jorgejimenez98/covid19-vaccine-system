@@ -24,8 +24,11 @@
                       alert-danger 
                     {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
                       alert-success 
-                    {% endif %} p-2" role="alert">
+                    {% endif %} p-2 alert-dismissible" role="alert">
     {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 {% endfor %}
 {% endif %}
@@ -96,7 +99,6 @@
 <!-- END Datatables Content -->
 
 <!-- Modal -->
-<!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -112,7 +114,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <a href="#" class="btn btn-primary modal-comfirm-delete" data-dismiss="modal">Sí, estoy seguro</a>
+                <a href="#" class="btn btn-primary modal-comfirm-delete">Sí, estoy seguro</a>
             </div>
         </div>
     </div>
@@ -135,7 +137,7 @@
         var userId = listData[1]
         var modal = $(this)
         modal.find('.modal-body-text').text('¿Seguro que desea eliminar el usuario ' + username + '?')
-        modal.find('.modal-comfirm-delete').attr("href", "/users/delete/" + userId);
+        modal.find('.modal-comfirm-delete').attr("href", "/users/delete/" + userId + "/");
     })
 </script>
 
