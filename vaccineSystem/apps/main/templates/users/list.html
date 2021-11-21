@@ -17,6 +17,20 @@
 </ul>
 <!-- END Datatables Header -->
 
+<!-- Error Message Section -->
+{% if messages %}
+{% for message in messages %}
+<div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} 
+                      alert-danger 
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+                      alert-success 
+                    {% endif %} p-2" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<!-- End Error Message Section -->
+
 <!-- Datatables Content -->
 <div class="block full">
     <div class="block-title">
