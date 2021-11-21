@@ -1,10 +1,128 @@
-{% extends 'master.html' %} 
-{% load static %} 
+{% extends 'master.html' %}
+{% load static %}
 
 {% block mainblock %}
-Users list
-{% endblock%} 
-{% block footerblock%}
 
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Usuarios<br><small>Tabla para gestionar los usuarios del sistema</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Tabla</li>
+    <li><a href="{% url 'userListView' %}">Usuarios</a></li>
+</ul>
+<!-- END Datatables Header -->
+
+<!-- Datatables Content -->
+<div class="block full">
+    <div class="block-title">
+        <h2>Listado de <strong>Usuarios</strong> ({{users.count}})</h2>
+        <a href="/users/add" class="btn btn-primary" style="float: right; margin: 5px; padding-bottom: 3px;">
+            Insertar Usuario
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table id="example-datatable" class="table table-vcenter table-condensed table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center">Nombre Completo</th>
+                    <th class="text-center">Nombre de usuario</th>
+                    <th class="text-center">Rol de Usuario</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td class="text-center">
+                        <h4>
+                            <span><strong>{{ user.name }}</strong></span>
+                        </h4>
+                    </td>
+                    <td class="text-center">
+                        <h5>
+                            <span>{{ user.username }}</span>
+                        </h5>
+                    </td>
+                    <td class="text-center">
+                        {% if user.is_staff %}
+                        <h4><span class="label label-success">Administrador</span></h4>
+                        {% elif user.isSpecialist %}
+                        <h4><span class="label label-info">Especialista</span></h4>
+                        {% endif %}
+                    </td>
+
+                    <td class="text-center">
+                        <div class="btn-group">
+                            <!-- Edit Button -->
+                            <a href="javascript:void(0)" data-toggle="tooltip" title="Edit"
+                                class="btn btn-xs btn-default" style="margin-top: 4px;"><i class="fa fa-pencil"></i>
+                            </a>
+                            <!-- Delete Button -->
+                            <div data-toggle="tooltip" title="Eliminar Usuario" class="btn btn-xs">
+                                <button type="button" data-toggle="modal" data-target="#exampleModalCenter"
+                                    data-whatever="{{ user.name }},{{ user.pk }}" class="btn btn-xs btn-danger">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END Datatables Content -->
+
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLongTitle">Eliminar Usuario</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-body-text"></h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a href="#" class="btn btn-primary modal-comfirm-delete" data-dismiss="modal">Sí, estoy seguro</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock%}
+{% block footerblock%}
+<!-- Load and execute javascript code used only in this page -->
+<script src="{% static 'js/pages/tablesDatatables.js' %}"></script>
+<script>$(function () { TablesDatatables.init(); });</script>
+
+<!-- PAssing data to modal script -->
+<script>
+    $('#exampleModalCenter').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var recipient = button.data('whatever')
+        var listData = recipient.split(",")
+        var username = listData[0];
+        var userId = listData[1]
+        var modal = $(this)
+        modal.find('.modal-body-text').text('¿Seguro que desea eliminar el usuario ' + username + '?')
+        modal.find('.modal-comfirm-delete').attr("href", "/users/delete/" + userId);
+    })
+</script>
 
 {% endblock%}
