@@ -11,3 +11,9 @@ def getNoAdminDeleteMessage(username) -> str:
 def deleteSuccessMessage(username) -> str:
     message = f'El usuario {username} ha sido eliminado satisfactoriamente'
     return message
+
+def getUniqueUserError(user: str) -> str:
+    return f'Ya existe una cuenta con el nombre de usuario ({user})'
+
+def getSuccessCreatedMessage(type: str) -> str:
+    return f'{type} creado satisfactoriamente'
