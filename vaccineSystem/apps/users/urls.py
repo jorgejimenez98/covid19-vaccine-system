@@ -5,4 +5,5 @@ urlpatterns = [
     path("users/list/", views.userListView, name="userListView"),
     path("users/add/", views.userAddView, name="userAddView"),
     path("users/delete/<int:pk>/", views.userDeleteView, name="userDeleteView"),
+    path("users/edit/<int:pk>/", views.userEditView, name="userEditView"),
 ]
