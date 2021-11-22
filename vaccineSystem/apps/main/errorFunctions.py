@@ -17,3 +17,6 @@ def getUniqueUserError(user: str) -> str:
 
 def getSuccessCreatedMessage(type: str) -> str:
     return f'{type} creado satisfactoriamente'
+
+def getSuccessEditMessage(type: str) -> str:
+    return f'{type} editado satisfactoriamente'
