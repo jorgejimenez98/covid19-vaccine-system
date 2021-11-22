@@ -1,10 +1,19 @@
 class UserForm:
-    def __init__(self, name, username, rol, password, confirmPassword):
+    def __init__(self, id, name, username, rol, password, confirmPassword):
+        self.__id = id
         self.__name = name
         self.__username = username
         self.__rol = rol
         self.__password = password
         self.__confirmPassword = confirmPassword
+
+    @property
+    def id(self):
+        return self.__id
+
+    @id.setter
+    def id(self, value):
+        self.__id = value
 
     @property
     def name(self):
