@@ -9,6 +9,7 @@ urlpatterns = [
     # Apps URLS
     path("", include("apps.main.urls")),
     path("", include("apps.users.urls")),
+    path("", include("apps.locality.urls")),
 ]
 
 if settings.DEBUG:  
