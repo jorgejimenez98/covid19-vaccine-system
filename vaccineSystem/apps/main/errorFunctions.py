@@ -23,3 +23,9 @@ def getSuccessEditMessage(type: str) -> str:
 
 def getUniqueTypeError(type: str, name: str) -> str:
     return f'Ya existe una {type} con el nombre ({name})'
+
+def getDelSuccessText(type: str, name: str) -> str:
+    return f'{type} ({name}) eliminada satisfactoriamente'
+
+def getDelProtectText(type: str, name: str) -> str:
+    return f'No se puede eliminar la {type} ({name}) porque otras entidades dependen de él'
