@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.contrib import messages
@@ -12,7 +13,7 @@ from .formclass import UserForm
 @checkUserAccess(rol='ADMIN', error_url='/403')
 def userListView(request):
     # Init Context
-    context = {"users": get_user_model().objects.all()}
+    context = {"users": get_user_model().objects.all().order_by('-pk')}
     # Render List
     return render(request, 'users/list.html', context)
 
@@ -22,10 +23,39 @@ def userListView(request):
 @checkUserAccess(rol='ADMIN', error_url='/403')
 def userAddView(request):
     # Init Context
-    context = {"user": UserForm("", "", "", "", "")}
+    context = {"user": UserForm(None, "", "", "", "", "")}
     # Render User Form
     if request.method == 'POST':
-        print('AAA', request.POST)
+        # Get data from template 
+        name = request.POST.get("val_name")
+        username = request.POST.get("val_username")
+        rol = request.POST.get("val_rol")
+        password = request.POST.get("val_password")
+        confirmPassword = request.POST.get("val_confirm_password")
+        # Update context 
+        context['user'].name = name
+        context['user'].username = username
+        context['user'].rol = rol
+        context['user'].password = password
+        context['user'].confirmPassword = confirmPassword
+        try:
+            # Create user 
+            get_user_model().objects.create_user(
+                username=username,
+                name=name,
+                is_staff=True if rol == 'ADMIN' else False,
+                isSpecialist=True if rol == 'SPECIALIST' else False,
+                password=password
+            )
+            # Redirect User List
+            messages.success(request, getSuccessCreatedMessage('Usuario'))
+            return redirect("userListView")
+        except IntegrityError:
+            # Validate Unique username field
+            messages.error(request, getUniqueUserError(username))
+        except Exception as e:
+            # Validate all posible errors
+            messages.error(request, e.args[0])
     return render(request, 'users/add.html', context)
 
 
