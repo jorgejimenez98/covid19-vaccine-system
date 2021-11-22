@@ -79,7 +79,7 @@
                             <!-- Delete Button -->
                             <div data-toggle="tooltip" title="Eliminar Provincia" class="btn btn-xs">
                                 <button type="button" data-toggle="modal" data-target="#exampleModalCenter"
-                                    data-whatever="{{ user.name }},{{ user.pk }}" class="btn btn-xs btn-danger">
+                                    data-whatever="{{ province.name }},{{ province.pk }}" class="btn btn-xs btn-danger">
                                     <i class="fa fa-trash-o"></i>
                                 </button>
                             </div>
@@ -138,10 +138,10 @@
         var recipient = button.data('whatever')
         var listData = recipient.split(",")
         var name = listData[0];
-        var userId = listData[1]
+        var provinceId = listData[1]
         var modal = $(this)
         modal.find('.modal-body-text').text('¿Seguro que desea eliminar la provincia ' + name + '?')
-        modal.find('.modal-comfirm-delete').attr("href", "/province/delete/" + userId + "/");
+        modal.find('.modal-comfirm-delete').attr("href", "/provinces/delete/" + provinceId + "/");
     })
 </script>
 
