@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # My Apps
     "apps.main",
     "apps.users",
+    "apps.locality",
 ]
 
 MIDDLEWARE = [
