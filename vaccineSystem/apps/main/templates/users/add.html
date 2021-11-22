@@ -1,5 +1,6 @@
 {% extends 'master.html' %}
 {% load static %}
+{% load template_tags %}
 
 {% block mainblock %}
 
@@ -56,7 +57,7 @@
                         class="text-danger">*</span></label>
                 <div class="col-md-6">
                     <div class="input-group">
-                        <input type="text" id="val_name" name="val_name" class="form-control"
+                        <input type="text" id="val_name" name="val_name" value="{{ user.name }}" class="form-control"
                             placeholder="Escribe aquí el nombre..">
                         <span class="input-group-addon"><i class="gi gi-user"></i></span>
                     </div>
@@ -66,12 +67,12 @@
             <!-- USERNAME -->
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="val_username">Nombre de Usuario <span
-                        class="text-danger">*</span></label>
+                <label class="col-md-4 control-label" for="val_username">Nombre de Usuario
+                    <span class="text-danger">*</span></label>
                 <div class="col-md-6">
                     <div class="input-group">
-                        <input type="text" id="val_username" name="val_username" class="form-control"
-                            placeholder="Escribe aquí el nombre de usuario..">
+                        <input type="text" id="val_username" name="val_username" value="{{ user.username }}"
+                            class="form-control" placeholder="Escribe aquí el nombre de usuario..">
                         <span class="input-group-addon"><i class="gi gi-user"></i></span>
                     </div>
                 </div>
@@ -84,9 +85,10 @@
                         class="text-danger">*</span></label>
                 <div class="col-md-6">
                     <select id="val_rol" name="val_rol" class="form-control">
-                        <option value="">Seleccione un Rol</option>
-                        <option value="ADMIN">Administrador</option>
-                        <option value="SPECIALIST">Especialista</option>
+                        <option value="" {% if user|isRol:'' %} selected {% endif %}>Seleccione un Rol</option>
+                        <option value="ADMIN" {% if user|isRol:'ADMIN' %} selected {% endif %}>Administrador</option>
+                        <option value="SPECIALIST" {% if user|isRol:'SPECIALIST' %} selected {% endif %}>Especialista
+                        </option>
                     </select>
                 </div>
             </div>
@@ -98,8 +100,8 @@
                         class="text-danger">*</span></label>
                 <div class="col-md-6">
                     <div class="input-group">
-                        <input type="password" id="val_password" name="val_password" class="form-control"
-                            placeholder="Escribe aquí la contraseña">
+                        <input type="password" id="val_password" value="{{ user.password }}" name="val_password"
+                            class="form-control" placeholder="Escribe aquí la contraseña">
                         <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
                     </div>
                 </div>
@@ -111,8 +113,8 @@
                         class="text-danger">*</span></label>
                 <div class="col-md-6">
                     <div class="input-group">
-                        <input type="password" id="val_confirm_password" name="val_confirm_password"
-                            class="form-control" placeholder="confirma aquí!">
+                        <input type="password" id="val_confirm_password" value="{{ user.confirmPassword }}"
+                            name="val_confirm_password" class="form-control" placeholder="confirma aquí!">
                         <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
                     </div>
                 </div>
