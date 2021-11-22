@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from apps.main.decorators import checkUserAccess
 from apps.main.errorFunctions import *
-from ..formClass import ProvinceForm, MunicipalityForm
+from ..formClass import ProvinceForm
 from ..models import Province
 
 
