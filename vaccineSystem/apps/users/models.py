@@ -22,6 +22,10 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def save(self, *args,**kwargs):
+        self.validate_unique()
+        super(UserManager,self).save(*args, **kwargs) 
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True)
@@ -37,3 +41,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f'User {self.name} - {self.username}'
+    
+  
