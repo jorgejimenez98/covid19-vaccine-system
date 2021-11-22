@@ -1,0 +1,155 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block headBlock %}
+<link rel="stylesheet" href="{% static 'table/datatable.min.css' %}" />
+<link rel="stylesheet" href="{% static 'table/responsive.datatables.min.css' %}" />
+{% endblock %}
+{% block mainblock %}
+
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Municipios<br><small>Tabla para gestionar los municipios del sistema</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Tabla</li>
+    <li><a href="{% url 'municipalityListView' %}">Provincias</a></li>
+</ul>
+<!-- END Datatables Header -->
+
+<!-- Error Message Section -->
+{% if messages %}
+{% for message in messages %}
+<div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} 
+                      alert-danger 
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+                      alert-success 
+                    {% endif %} p-2 alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+<!-- End Error Message Section -->
+
+<!-- Datatables Content -->
+<div class="block full">
+    <div class="block-title">
+        <h2>Listado de <strong>Municipios</strong> ({{municipalities.count}})</h2>
+        <a href="#" class="btn btn-primary" style="float: right; margin: 5px; padding-bottom: 3px;">
+            Insertar municipios
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table id="example" class="table table-vcenter table-condensed table-bordered" cellspacing="0"
+            style="width: 100%; border: none">
+            <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Nombre </th>
+                    <th class="text-center">Provincia </th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mun in municipalities %}
+                <tr>
+                    <td class="text-center">
+                        <h4>
+                            <span><strong>{{ mun.pk }}</strong></span>
+                        </h4>
+                    </td>
+                    <td class="text-center">
+                        <h4>
+                            <span><strong>{{ mun.name }}</strong></span>
+                        </h4>
+                    </td>
+                    <td class="text-center">
+                        <h4>
+                            <span><strong>{{ mun.province.name }}</strong></span>
+                        </h4>
+                    </td>
+
+                    <td class="text-center">
+                        <div class="btn-group">
+                            <!-- Edit Button -->
+                            <a href="#" data-toggle="tooltip" title="Editar Municipio"
+                                class="btn btn-xs btn-default" style="margin-top: 4px;"><i class="fa fa-pencil"></i>
+                            </a>
+                            <!-- Delete Button -->
+                            <div data-toggle="tooltip" title="Eliminar Municipio" class="btn btn-xs">
+                                <button type="button" data-toggle="modal" data-target="#exampleModalCenter"
+                                    data-whatever="{{ mun.name }},{{ mun.pk }}" class="btn btn-xs btn-danger">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- END Datatables Content -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLongTitle">Eliminar Municipio</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-body-text"></h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a href="#" class="btn btn-primary modal-comfirm-delete">Sí, estoy seguro</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock%}
+{% block footerblock%}
+
+<!-- Table -->
+<script src="{% static 'table/datatable.min.js' %}"></script>
+<script src="{% static 'table/responsive.datatable.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+<!-- PAssing data to modal script -->
+<script>
+    $('#exampleModalCenter').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var recipient = button.data('whatever')
+        var listData = recipient.split(",")
+        var name = listData[0];
+        var munId = listData[1]
+        var modal = $(this)
+        modal.find('.modal-body-text').text('¿Seguro que desea eliminar el municipio ' + name + '?')
+        modal.find('.modal-comfirm-delete').attr("href", "/municipalities/delete/" + munId + "/");
+    })
+</script>
+
+
+{% endblock%}
