@@ -50,8 +50,12 @@
 
     <!-- Form Validation Example Content -->
     <form id="form-validation"
-        action="{% if province.id is None %} {% url 'provinceAddView' %} {% else %} # {% endif %}" method="post"
-        class="form-horizontal form-bordered">
+        action="{% if province.id is None %} 
+                    {% url 'provinceAddView' %} 
+                {% else %} 
+                    {% url 'provinceEditView' pk=province.id %} 
+                {% endif %}"
+        method="post" class="form-horizontal form-bordered">
         {% csrf_token %}
         <fieldset>
 
