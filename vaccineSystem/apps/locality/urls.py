@@ -8,4 +8,7 @@ urlpatterns = [
     path("provinces/add/", pviews.provinceAddView, name='provinceAddView'),
     path("provinces/edit/<int:pk>/", pviews.provinceEditView, name='provinceEditView'),
     path("provinces/delete/<int:pk>/", pviews.provinceDeleteView, name='provinceDeleteView'),
+    # Municipality urls
+    path("municipalities/list/", mviews.municipalityListView, name='municipalityListView'),
+    
 ]
