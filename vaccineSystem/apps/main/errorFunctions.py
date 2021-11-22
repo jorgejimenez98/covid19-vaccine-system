@@ -20,3 +20,6 @@ def getSuccessCreatedMessage(type: str) -> str:
 
 def getSuccessEditMessage(type: str) -> str:
     return f'{type} editado satisfactoriamente'
+
+def getUniqueTypeError(type: str, name: str) -> str:
+    return f'Ya existe una {type} con el nombre ({name})'
