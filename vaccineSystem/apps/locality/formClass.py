@@ -21,10 +21,11 @@ class ProvinceForm:
     
 
 class MunicipalityForm:
-    def __init__(self, id, name, provinceId):
+    def __init__(self, id, name, provinceId, provinceName):
         self.__id = id
         self.__name = name
         self.__provinceId = provinceId
+        self.__provinceName = provinceName
 
     @property
     def id(self):
@@ -49,3 +50,11 @@ class MunicipalityForm:
     @provinceId.setter
     def provinceId(self, value):
         self.__provinceId = value
+
+    @property
+    def provinceName(self):
+        return self.__provinceName
+
+    @provinceName.setter
+    def provinceName(self, value):
+        self.__provinceName = value
