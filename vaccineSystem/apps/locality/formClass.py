@@ -3,7 +3,7 @@ class ProvinceForm:
         self.__id = id
         self.__name = name
 
-     @property
+    @property
     def id(self):
         return self.__id
 
@@ -26,7 +26,7 @@ class MunicipalityForm:
         self.__name = name
         self.__provinceId = provinceId
 
-     @property
+    @property
     def id(self):
         return self.__id
 
