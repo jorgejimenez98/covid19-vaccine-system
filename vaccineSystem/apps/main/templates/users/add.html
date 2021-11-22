@@ -8,14 +8,17 @@
 <div class="content-header">
     <div class="header-section">
         <h1>
-            <i class="fa fa-table"></i>Usuarios<br><small>Formulario para insertar usuarios al sistema</small>
+            <i class="fa fa-table"></i>Usuarios<br>
+            <small>
+                Formulario para {% if user.id is None %} insertar {% else %} editar {% endif %} usuarios al sistema
+            </small>
         </h1>
     </div>
 </div>
 <ul class="breadcrumb breadcrumb-top">
     <li>Tabla</li>
     <li><a href="{% url 'userListView' %}">Usuarios</a></li>
-    <li>Insertar</li>
+    <li>{% if user.id is None %} Insertar {% else %} Editar {% endif %}</li>
 </ul>
 <!-- END Datatables Header -->
 
@@ -42,12 +45,14 @@
 <div class="block">
     <!-- Form Validation Example Title -->
     <div class="block-title">
-        <h2><strong>Form Validation</strong> Example</h2>
+        <h2><strong>Formulario de Usuarios</strong></h2>
     </div>
     <!-- END Form Validation Example Title -->
 
     <!-- Form Validation Example Content -->
-    <form id="form-validation" action="{% url 'userAddView' %}" method="post" class="form-horizontal form-bordered">
+    <form id="form-validation"
+        action="{% if user.id is None %} {% url 'userAddView' %} {% else %} {% url 'userEditView' pk=user.id %} {% endif %}"
+        method="post" class="form-horizontal form-bordered">
         {% csrf_token %}
         <fieldset>
 
@@ -93,7 +98,7 @@
                 </div>
             </div>
 
-
+            {% if user.id is None %}
             <!-- PASSWORD -->
             <div class="form-group">
                 <label class="col-md-4 control-label" for="val_password">Contraseña <span
@@ -119,6 +124,8 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
+
         </fieldset>
 
         <div class="form-group form-actions text-right">
@@ -126,7 +133,8 @@
                 <a href="{% url 'userListView' %}" class="btn btn-sm btn-default">Cancelar</a>
                 <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Resetear
                     Formulario</button>
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-arrow-right"></i> Insertar
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-arrow-right"></i>
+                    {% if user.id is None %} Insertar {% else %} Editar {% endif %}
                     Usuario</button>
             </div>
         </div>
@@ -140,7 +148,12 @@
 {% endblock%}
 {% block footerblock%}
 <!-- Load and execute javascript code used only in this page -->
+{% if user.id is None %}
 <script src="{% static 'js/validators/adduservalidator.js' %}"></script>
+{% else %}
+<script src="{% static 'js/validators/edituservalidator.js' %}"></script>
+{% endif %}
+
 <script>$(function () { FormsValidation.init(); });</script>
 
 {% endblock%}
