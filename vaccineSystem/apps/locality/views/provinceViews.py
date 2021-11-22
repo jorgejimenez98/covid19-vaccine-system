@@ -1,5 +1,6 @@
-from django.db import IntegrityError
 from django.shortcuts import render, redirect
+from django.db import IntegrityError
+from django.db.models import ProtectedError
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from apps.main.decorators import checkUserAccess
@@ -80,3 +81,25 @@ def provinceEditView(request, pk):
             # Validate all posible errors
             messages.error(request, e.args[0])
     return render(request, 'province/add.html', context)
+
+
+""" DELETE PROVINCE """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def provinceDeleteView(request, pk=None):
+    # Get Province from database
+    provinceToDelete = Province.objects.get(pk=pk)
+    try:
+        # Delete Province
+        provinceToDelete.delete()
+        # Send success message
+        message = getDelSuccessText('Provincia', provinceToDelete.name)
+        messages.success(request, message)
+    except ProtectedError:
+        # Send error Message
+        message = getDelProtectText('Provincia', provinceToDelete.name)
+        messages.error(request, message)
+    # Render to province list after deletion
+    return redirect('provinceListView')
