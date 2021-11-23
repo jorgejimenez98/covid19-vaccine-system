@@ -41,7 +41,7 @@ def consultRoomAddView(request):
         context['con'].name = name
         context['con'].munId = val_pol_id
         try:
-            # Create 
+            # Create
             ConsultingRoom.objects.create(
                 name=name,
                 polyclinic=Polyclinic.objects.get(pk=int(val_pol_id))
@@ -76,7 +76,7 @@ def consultRoomEditView(request, pk):
         context['con'].name = name
         context['con'].munId = val_pol_id
         try:
-            # Update 
+            # Update
             con.name = name
             con.polyclinic = Polyclinic.objects.get(pk=int(val_pol_id))
             con.save()
@@ -87,3 +87,24 @@ def consultRoomEditView(request, pk):
             # Validate all posible errors
             messages.error(request, e.args[0])
     return render(request, 'consults/addOrEdit.html', context)
+
+
+""" DELETE CONSULT ROOM  """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def consultRoomDeleteView(request, pk):
+    # Get Data from template
+    consultingRoom = ConsultingRoom.objects.get(pk=pk)
+    try:
+        # Delete Pol
+        consultingRoom.delete()
+        # Redirect Pol List
+        message = getDelSuccessText('Consultorio', consultingRoom.name)
+        messages.success(request, message)
+    except ProtectedError:
+        # Send error Message
+        message = getDelProtectText('Consultorio', consultingRoom.name)
+        messages.error(request, message)
+    return redirect("consultingRoomListView")
