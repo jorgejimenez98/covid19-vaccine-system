@@ -18,4 +18,5 @@ urlpatterns = [
     path("schools/list/", sviews.schoolListView, name='schoolListView'),
     path("schools/add/", sviews.schoolAddView, name='schoolAddView'),
     path("schools/edit/<int:pk>/", sviews.schoolEditView, name='schoolEditView'),
+    path("schools/delete/<int:pk>/", sviews.schoolDeleteView, name='schoolDeleteView'),
 ]
