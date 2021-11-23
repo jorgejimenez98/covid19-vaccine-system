@@ -61,7 +61,7 @@ def municipalityAddView(request):
 @login_required(login_url='/login')
 @checkUserAccess(rol='ADMIN', error_url='/403')
 def municipalityEditView(request, pk):
-    # Get Mun from template 
+    # Get Mun from template
     print("AAAAAAA")
     mun = Municipality.objects.get(pk=pk)
     # Init Context
@@ -89,3 +89,23 @@ def municipalityEditView(request, pk):
             # Validate all posible errors
             messages.error(request, e.args[0])
     return render(request, 'municipality/add.html', context)
+
+
+""" DELETE Municipality """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def municipalityDeleteView(request, pk):
+    # Get Mun from template
+    mun = Municipality.objects.get(pk=pk)
+    try:
+        # Delete Mun
+        mun.delete()
+        # Redirect MUN List
+        message = getDelSuccessText('Municipio', mun.name)
+        messages.success(request, message)
+    except Exception as e:
+        # Validate all posible errors
+        messages.error(request, e.args[0])
+    return redirect("municipalityListView")
