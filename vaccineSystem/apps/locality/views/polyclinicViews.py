@@ -21,7 +21,7 @@ def polyclinicListView(request):
     return render(request, 'polyclinic/list.html', context)
 
 
-""" ADD SCHOOLS """
+""" ADD POLYCLINIC """
 
 
 @login_required(login_url='/login')
@@ -32,7 +32,7 @@ def polyclinicAddView(request):
         "pol": SchoolForm(None, "", "", ""),
         "muns": Municipality.objects.all().order_by('-pk')
     }
-    # Render Mun Form
+    # Render Pol Form
     if request.method == 'POST':
         # Get data from template
         name = request.POST.get("val_name")
@@ -41,12 +41,12 @@ def polyclinicAddView(request):
         context['pol'].name = name
         context['pol'].munId = val_mun_id
         try:
-            # Create Schools
+            # Create Pol
             Polyclinic.objects.create(
                 name=name,
                 municipality=Municipality.objects.get(pk=int(val_mun_id))
             )
-            # Redirect MUN List
+            # Redirect Pol List
             messages.success(request, getSuccessCreatedMessage('Policlinico'))
             return redirect("polyclinicListView")
         except Exception as e:
@@ -55,7 +55,7 @@ def polyclinicAddView(request):
     return render(request, 'polyclinic/addOrEdit.html', context)
 
 
-""" EDIT SCHOOLS """
+""" EDIT POLYCLINIC """
 
 
 @login_required(login_url='/login')
@@ -81,10 +81,31 @@ def polyclinicEditView(request, pk):
             pol.name = name
             pol.municipality = Municipality.objects.get(pk=int(val_mun_id))
             pol.save()
-            # Redirect MUN List
+            # Redirect Pol List
             messages.success(request, getSuccessEditMessage('Policlinico'))
             return redirect("polyclinicListView")
         except Exception as e:
             # Validate all posible errors
             messages.error(request, e.args[0])
     return render(request, 'polyclinic/addOrEdit.html', context)
+
+
+""" DELETE POLYCLINIC """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def polyclinicDeleteView(request, pk):
+    # Get School from template
+    pol = Polyclinic.objects.get(pk=pk)
+    try:
+        # Delete Pol
+        pol.delete()
+        # Redirect Pol List
+        message = getDelSuccessText('Policlinico', pol.name)
+        messages.success(request, message)
+    except ProtectedError:
+        # Send error Message
+        message = getDelProtectText('Policlinico', pol.name)
+        messages.error(request, message)
+    return redirect("polyclinicListView")
