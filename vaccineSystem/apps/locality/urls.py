@@ -30,4 +30,5 @@ urlpatterns = [
     path("consults/list/", coviews.consultingRoomListView, name='consultingRoomListView'),
     path("consults/add/", coviews.consultRoomAddView, name='consultRoomAddView'),
     path("consults/edit/<int:pk>/", coviews.consultRoomEditView, name='consultRoomEditView'),
+    path("consults/delete/<int:pk>/", coviews.consultRoomDeleteView, name='consultRoomDeleteView'),
 ]
