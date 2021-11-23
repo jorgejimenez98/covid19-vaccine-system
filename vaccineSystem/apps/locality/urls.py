@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import municipalityViews as mviews
 from .views import provinceViews as pviews
+from .views import schoolViews as sviews
 
 urlpatterns = [
     # Province urls
@@ -13,4 +14,6 @@ urlpatterns = [
     path("municipalities/add/", mviews.municipalityAddView, name='municipalityAddView'),
     path("municipalities/edit/<int:pk>/", mviews.municipalityEditView, name='municipalityEditView'),
     path("municipalities/delete/<int:pk>/", mviews.municipalityDeleteView, name='municipalityDeleteView'),
+    # School urls
+    path("schools/list/", sviews.schoolListView, name='schoolListView'),
 ]
