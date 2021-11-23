@@ -53,3 +53,38 @@ def schoolAddView(request):
             # Validate all posible errors
             messages.error(request, e.args[0])
     return render(request, 'school/addOrdEdit.html', context)
+
+
+""" EDIT SCHOOLS """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def schoolEditView(request, pk):
+    # Get Data from template
+    school = School.objects.get(pk=pk)
+    # Init Context
+    context = {
+        "school": SchoolForm(school.pk, school.name, school.municipality.pk, school.municipality.name),
+        "muns": Municipality.objects.all().order_by('-pk')
+    }
+    # Render Mun Form
+    if request.method == 'POST':
+        # Get data from template
+        name = request.POST.get("val_name")
+        val_mun_id = request.POST.get("val_mun_id")
+        # Update context
+        context['school'].name = name
+        context['school'].munId = val_mun_id
+        try:
+            # Update Schools
+            school.name = name 
+            school.municipality = Municipality.objects.get(pk=int(val_mun_id))
+            school.save()
+            # Redirect MUN List
+            messages.success(request, getSuccessEditMessage('Escuela'))
+            return redirect("schoolListView")
+        except Exception as e:
+            # Validate all posible errors
+            messages.error(request, e.args[0])
+    return render(request, 'school/addOrdEdit.html', context)
