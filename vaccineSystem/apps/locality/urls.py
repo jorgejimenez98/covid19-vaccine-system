@@ -2,6 +2,7 @@ from django.urls import path
 from .views import municipalityViews as mviews
 from .views import provinceViews as pviews
 from .views import schoolViews as sviews
+from .views import polyclinicViews as poviews
 
 urlpatterns = [
     # Province urls
@@ -19,4 +20,6 @@ urlpatterns = [
     path("schools/add/", sviews.schoolAddView, name='schoolAddView'),
     path("schools/edit/<int:pk>/", sviews.schoolEditView, name='schoolEditView'),
     path("schools/delete/<int:pk>/", sviews.schoolDeleteView, name='schoolDeleteView'),
+    # Polyclinic urls
+    path("polyclinics/list/", poviews.polyclinicListView, name='polyclinicListView'),
 ]
