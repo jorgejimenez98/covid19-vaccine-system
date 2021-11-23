@@ -50,10 +50,10 @@
     <!-- END Form Validation Example Title -->
 
     <!-- Form Validation Example Content -->
-    <form id="form-validation" action="{% if mun.id is None %} 
+    <form id="form-validation" action="{% if school.id is None %} 
                     {% url 'schoolAddView' %} 
                 {% else %} 
-                    #
+                    {% url 'schoolEditView' pk=school.id %}
                 {% endif %}" method="post" class="form-horizontal form-bordered">
         {% csrf_token %}
         <fieldset>
