@@ -62,7 +62,6 @@ def municipalityAddView(request):
 @checkUserAccess(rol='ADMIN', error_url='/403')
 def municipalityEditView(request, pk):
     # Get Mun from template
-    print("AAAAAAA")
     mun = Municipality.objects.get(pk=pk)
     # Init Context
     context = {
