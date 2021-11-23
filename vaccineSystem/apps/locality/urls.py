@@ -27,5 +27,6 @@ urlpatterns = [
     path("polyclinics/edit/<int:pk>/", poviews.polyclinicEditView, name='polyclinicEditView'),
     path("polyclinics/delete/<int:pk>/", poviews.polyclinicDeleteView, name='polyclinicDeleteView'),
     # Consult Rooms Urls
-    path("consults/list/", coviews.consultingRoomListView, name='consultingRoomListView')
+    path("consults/list/", coviews.consultingRoomListView, name='consultingRoomListView'),
+    path("consults/add/", coviews.consultRoomAddView, name='consultRoomAddView'),
 ]
