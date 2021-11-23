@@ -19,3 +19,37 @@ def consultingRoomListView(request):
     context = {"consults": ConsultingRoom.objects.all().order_by('-pk')}
     # Render List
     return render(request, 'consults/list.html', context)
+
+
+""" ADD POLYCLINIC """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def consultRoomAddView(request):
+    # Init Context
+    context = {
+        "con": SchoolForm(None, "", "", ""),
+        "pols": Polyclinic.objects.all().order_by('-pk')
+    }
+    # Render Pol Form
+    if request.method == 'POST':
+        # Get data from template
+        name = request.POST.get("val_name")
+        val_pol_id = request.POST.get("val_pol_id")
+        # Update context
+        context['con'].name = name
+        context['con'].munId = val_pol_id
+        try:
+            # Create 
+            ConsultingRoom.objects.create(
+                name=name,
+                polyclinic=Polyclinic.objects.get(pk=int(val_pol_id))
+            )
+            # Redirect List
+            messages.success(request, getSuccessCreatedMessage('Consultorio'))
+            return redirect("consultingRoomListView")
+        except Exception as e:
+            # Validate all posible errors
+            messages.error(request, e.args[0])
+    return render(request, 'consults/addOrEdit.html', context)
