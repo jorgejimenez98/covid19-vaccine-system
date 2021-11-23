@@ -3,6 +3,7 @@ from .views import municipalityViews as mviews
 from .views import provinceViews as pviews
 from .views import schoolViews as sviews
 from .views import polyclinicViews as poviews
+from .views import consultingRoomsViews as coviews
 
 urlpatterns = [
     # Province urls
@@ -25,4 +26,6 @@ urlpatterns = [
     path("polyclinics/add/", poviews.polyclinicAddView, name='polyclinicAddView'),
     path("polyclinics/edit/<int:pk>/", poviews.polyclinicEditView, name='polyclinicEditView'),
     path("polyclinics/delete/<int:pk>/", poviews.polyclinicDeleteView, name='polyclinicDeleteView'),
+    # Consult Rooms Urls
+    path("consults/list/", coviews.consultingRoomListView, name='consultingRoomListView')
 ]
