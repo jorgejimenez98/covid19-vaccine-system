@@ -105,7 +105,8 @@ def municipalityDeleteView(request, pk):
         # Redirect MUN List
         message = getDelSuccessText('Municipio', mun.name)
         messages.success(request, message)
-    except Exception as e:
-        # Validate all posible errors
-        messages.error(request, e.args[0])
+    except ProtectedError:
+        # Send error Message
+        message = getDelProtectText('Municipio', mun.name)
+        messages.error(request, message)
     return redirect("municipalityListView")
