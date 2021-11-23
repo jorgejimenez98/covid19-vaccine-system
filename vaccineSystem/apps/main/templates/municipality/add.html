@@ -1,5 +1,6 @@
 {% extends 'master.html' %}
 {% load static %}
+{% load template_tags %}
 
 {% block mainblock %}
 
@@ -49,10 +50,10 @@
     <!-- END Form Validation Example Title -->
 
     <!-- Form Validation Example Content -->
-    <form id="form-validation" action="{% if province.id is None %} 
+    <form id="form-validation" action="{% if mun.id is None %} 
                     {% url 'municipalityAddView' %} 
                 {% else %} 
-                    #
+                    {% url 'municipalityEditView' pk=mun.id %}
                 {% endif %}" method="post" class="form-horizontal form-bordered">
         {% csrf_token %}
         <fieldset>
@@ -62,8 +63,8 @@
                 <label class="col-md-4 control-label" for="val_name">Nombre <span class="text-danger">*</span></label>
                 <div class="col-md-6">
                     <div class="input-group">
-                        <input type="text" id="val_name" name="val_name" value="{{ mun.name }}"
-                            class="form-control" placeholder="Escribe aquí el nombre..">
+                        <input type="text" id="val_name" name="val_name" value="{{ mun.name }}" class="form-control"
+                            placeholder="Escribe aquí el nombre..">
                         <span class="input-group-addon"><i class="gi gi-user"></i></span>
                     </div>
                 </div>
@@ -77,19 +78,16 @@
                 <div class="col-md-6">
                     <select id="val_province_id" name="val_province_id" class="form-control">
                         {% if mun.id is not None %}
-                            <option value="{{ mun.provinceId }}">
-                                {{ mun.provinceName }}
-                            </option>
-                            {% for province in provinces %}
-                                {% if province.pk != mun.provinceId %}
-                                <option value="{{ province.id }}">{{ province.name }}</option>
-                                {% endif %}
-                            {% endfor %}
-                            {% else %}
-                                <option value="">Selecciona una provincia</option>
-                            {% for province in provinces %}
-                                <option value="{{ province.id }}">{{ province.name }}</option>
-                            {% endfor %}
+                        {% for province in provinces %}
+                        <option value="{{ province.id }}" {% if province|isProvinceId:mun.provinceId %} selected {% endif %}>
+                            {{ province.name }}
+                        </option>
+                        {% endfor %}
+                        {% else %}
+                        <option value="">Selecciona una provincia</option>
+                        {% for province in provinces %}
+                        <option value="{{ province.id }}">{{ province.name }}</option>
+                        {% endfor %}
                         {% endif %}
                     </select>
                 </div>
