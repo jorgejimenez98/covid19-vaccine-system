@@ -53,7 +53,7 @@
     <form id="form-validation" action="{% if pol.id is None %} 
                     {% url 'polyclinicAddView' %} 
                 {% else %} 
-                 #
+                 {% url 'polyclinicEditView' pk=pol.id %}
                 {% endif %}" method="post" class="form-horizontal form-bordered">
         {% csrf_token %}
         <fieldset>
