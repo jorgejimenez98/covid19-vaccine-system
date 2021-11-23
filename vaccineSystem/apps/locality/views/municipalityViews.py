@@ -53,3 +53,39 @@ def municipalityAddView(request):
             # Validate all posible errors
             messages.error(request, e.args[0])
     return render(request, 'municipality/add.html', context)
+
+
+""" EDIT Municipality """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def municipalityEditView(request, pk):
+    # Get Mun from template 
+    print("AAAAAAA")
+    mun = Municipality.objects.get(pk=pk)
+    # Init Context
+    context = {
+        "mun": MunicipalityForm(mun.pk, mun.name, mun.province.pk, mun.province.name),
+        "provinces": Province.objects.all().order_by('-pk')
+    }
+    # Render Mun Form
+    if request.method == 'POST':
+        # Get data from template
+        name = request.POST.get("val_name")
+        val_province_id = request.POST.get("val_province_id")
+        # Update context
+        context['mun'].name = name
+        context['mun'].provinceId = val_province_id
+        try:
+            # Update Mun
+            mun.name = name
+            mun.province = Province.objects.get(pk=int(val_province_id))
+            mun.save()
+            # Redirect MUN List
+            messages.success(request, getSuccessEditMessage('Municipio'))
+            return redirect("municipalityListView")
+        except Exception as e:
+            # Validate all posible errors
+            messages.error(request, e.args[0])
+    return render(request, 'municipality/add.html', context)
