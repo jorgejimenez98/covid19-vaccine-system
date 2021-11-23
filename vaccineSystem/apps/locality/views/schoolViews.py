@@ -78,7 +78,7 @@ def schoolEditView(request, pk):
         context['school'].munId = val_mun_id
         try:
             # Update Schools
-            school.name = name 
+            school.name = name
             school.municipality = Municipality.objects.get(pk=int(val_mun_id))
             school.save()
             # Redirect MUN List
@@ -88,3 +88,24 @@ def schoolEditView(request, pk):
             # Validate all posible errors
             messages.error(request, e.args[0])
     return render(request, 'school/addOrdEdit.html', context)
+
+
+""" DELETE SCHOOLS """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def schoolDeleteView(request, pk):
+    # Get School from template
+    school = School.objects.get(pk=pk)
+    try:
+        # Delete Mun
+        school.delete()
+        # Redirect MUN List
+        message = getDelSuccessText('Escuela', school.name)
+        messages.success(request, message)
+    except ProtectedError:
+        # Send error Message
+        message = getDelProtectText('Escuela', school.name)
+        messages.error(request, message)
+    return redirect("schoolListView")
