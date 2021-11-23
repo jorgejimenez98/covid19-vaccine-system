@@ -24,4 +24,5 @@ urlpatterns = [
     path("polyclinics/list/", poviews.polyclinicListView, name='polyclinicListView'),
     path("polyclinics/add/", poviews.polyclinicAddView, name='polyclinicAddView'),
     path("polyclinics/edit/<int:pk>/", poviews.polyclinicEditView, name='polyclinicEditView'),
+    path("polyclinics/delete/<int:pk>/", poviews.polyclinicDeleteView, name='polyclinicDeleteView'),
 ]
