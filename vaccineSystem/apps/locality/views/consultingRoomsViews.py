@@ -21,7 +21,7 @@ def consultingRoomListView(request):
     return render(request, 'consults/list.html', context)
 
 
-""" ADD POLYCLINIC """
+""" ADD CONSULT ROOM """
 
 
 @login_required(login_url='/login')
@@ -48,6 +48,40 @@ def consultRoomAddView(request):
             )
             # Redirect List
             messages.success(request, getSuccessCreatedMessage('Consultorio'))
+            return redirect("consultingRoomListView")
+        except Exception as e:
+            # Validate all posible errors
+            messages.error(request, e.args[0])
+    return render(request, 'consults/addOrEdit.html', context)
+
+
+""" ADD CONSULT ROOM """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def consultRoomEditView(request, pk):
+    con = ConsultingRoom.objects.get(pk=pk)
+    # Init Context
+    context = {
+        "con": SchoolForm(con.id, con.name, con.polyclinic.pk, con.polyclinic.name),
+        "pols": Polyclinic.objects.all().order_by('-pk')
+    }
+    # Render Pol Form
+    if request.method == 'POST':
+        # Get data from template
+        name = request.POST.get("val_name")
+        val_pol_id = request.POST.get("val_pol_id")
+        # Update context
+        context['con'].name = name
+        context['con'].munId = val_pol_id
+        try:
+            # Update 
+            con.name = name
+            con.polyclinic = Polyclinic.objects.get(pk=int(val_pol_id))
+            con.save()
+            # Redirect List
+            messages.success(request, getSuccessEditMessage('Consultorio'))
             return redirect("consultingRoomListView")
         except Exception as e:
             # Validate all posible errors
