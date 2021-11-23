@@ -1,0 +1,117 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load template_tags %}
+
+{% block mainblock %}
+
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Policlinicos<br>
+            <small>
+                Formulario para {% if pol.id is None %} insertar {% else %} editar {% endif %} Policlinicos al
+                sistema
+            </small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Tabla</li>
+    <li><a href="{% url 'polyclinicListView' %}">Policlinicos</a></li>
+    <li>{% if pol.id is None %} Insertar {% else %} Editar {% endif %}</li>
+</ul>
+<!-- END Datatables Header -->
+
+<!-- Error Message Section -->
+{% if messages %}
+{% for message in messages %}
+<div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} 
+                      alert-danger 
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+                      alert-success 
+                    {% endif %} p-2 alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+<!-- End Error Message Section -->
+
+
+<!-- Form Validation Example Block -->
+<div class="block">
+    <!-- Form Validation Example Title -->
+    <div class="block-title">
+        <h2><strong>Formulario de Policlinico</strong></h2>
+    </div>
+    <!-- END Form Validation Example Title -->
+
+    <!-- Form Validation Example Content -->
+    <form id="form-validation" action="{% if pol.id is None %} 
+                    {% url 'polyclinicAddView' %} 
+                {% else %} 
+                 #
+                {% endif %}" method="post" class="form-horizontal form-bordered">
+        {% csrf_token %}
+        <fieldset>
+
+            <!-- NAME -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="val_name">Nombre <span class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" id="val_name" name="val_name" value="{{ pol.name }}" class="form-control"
+                            placeholder="Escribe aquí el nombre..">
+                        <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mun -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="val_mun_id">
+                    Seleccione un municipio para el policlinico
+                    <span class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <select id="val_mun_id" name="val_mun_id" class="form-control">
+                        {% if pol.id is not None %}
+                        {% for mun in muns %}
+                        <option value="{{ mun.id }}" {% if mun|isProvinceId:pol.munId %} selected {% endif %}>
+                            {{ mun.name }} | {{ mun.province.name }}
+                        </option>
+                        {% endfor %}
+                        {% else %}
+                        <option value="">Selecciona un municipio</option>
+                        {% for mun in muns %}
+                        <option value="{{ mun.id }}">{{ mun.name }} | {{ mun.province.name }}</option>
+                        {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="form-group form-actions text-right">
+            <div class="col-md-8 col-md-offset-4">
+                <a href="{% url 'polyclinicListView' %}" class="btn btn-sm btn-default">Cancelar</a>
+                <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Resetear
+                    Formulario</button>
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-arrow-right"></i>
+                    {% if pol.id is None %} Insertar {% else %} Editar {% endif %}</button>
+            </div>
+        </div>
+    </form>
+    <!-- END Form Validation Example Content -->
+
+</div>
+
+
+
+{% endblock%}
+{% block footerblock%}
+<script src="{% static 'js/validators/schoolValidator.js' %}"></script>
+<script>$(function () { FormsValidation.init(); });</script>
+{% endblock%}
