@@ -32,4 +32,15 @@ class Polyclinic(models.Model):
         Municipality, on_delete=models.PROTECT, related_name='polyclinics')
 
     def __str__(self):
-        return f'Escuela {self.name}'
+        return f'Policlinico {self.name}'
+
+
+class ConsultingRoom(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    polyclinic = models.ForeignKey(
+        Polyclinic, on_delete=models.PROTECT, related_name='consulting_rooms')
+
+    def __str__(self):
+        return f'Consultorio {self.name}'
+
+
