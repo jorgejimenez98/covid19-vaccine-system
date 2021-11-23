@@ -24,3 +24,12 @@ class School(models.Model):
 
     def __str__(self):
         return f'Escuela {self.name}'
+
+
+class Polyclinic(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    municipality = models.ForeignKey(
+        Municipality, on_delete=models.PROTECT, related_name='polyclinics')
+
+    def __str__(self):
+        return f'Escuela {self.name}'
