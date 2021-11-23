@@ -18,7 +18,7 @@ class ProvinceForm:
     @name.setter
     def name(self, value):
         self.__name = value
-    
+
 
 class MunicipalityForm:
     def __init__(self, id, name, provinceId, provinceName):
@@ -58,3 +58,43 @@ class MunicipalityForm:
     @provinceName.setter
     def provinceName(self, value):
         self.__provinceName = value
+
+
+class SchoolForm:
+    def __init__(self, id, name, munId, munName):
+        self.__id = id
+        self.__name = name
+        self.__munId = munId
+        self.__munName = munName
+
+    @property
+    def id(self):
+        return self.__id
+
+    @id.setter
+    def id(self, value):
+        self.__id = value
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        self.__name = value
+
+    @property
+    def munId(self):
+        return self.__munId
+
+    @munId.setter
+    def munId(self, value):
+        self.__munId = value
+
+    @property
+    def munName(self):
+        return self.__munName
+
+    @munName.setter
+    def munName(self, value):
+        self.__munName = value
