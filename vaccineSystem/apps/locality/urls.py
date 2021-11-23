@@ -12,4 +12,5 @@ urlpatterns = [
     path("municipalities/list/", mviews.municipalityListView, name='municipalityListView'),
     path("municipalities/add/", mviews.municipalityAddView, name='municipalityAddView'),
     path("municipalities/edit/<int:pk>/", mviews.municipalityEditView, name='municipalityEditView'),
+    path("municipalities/delete/<int:pk>/", mviews.municipalityDeleteView, name='municipalityDeleteView'),
 ]
