@@ -11,6 +11,7 @@ urlpatterns = [
     path("", include("apps.users.urls")),
     path("", include("apps.locality.urls")),
     path("", include("apps.vaccine.urls")),
+    path("", include("apps.people.urls")),
 ]
 
 if settings.DEBUG:  
