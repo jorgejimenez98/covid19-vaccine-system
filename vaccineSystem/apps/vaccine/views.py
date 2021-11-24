@@ -28,7 +28,7 @@ def vaccinesListView(request):
 @checkUserAccess(rol='ADMIN', error_url='/403')
 def vaccinesAddView(request):
     # Init Context
-    context = {"vaccine": VaccineForm(None, "", False, False, False)}
+    context = {"vaccine": VaccineForm()}
     # Render User Form
     if request.method == 'POST':
         # Get data from template
@@ -54,6 +54,52 @@ def vaccinesAddView(request):
             )
             # Redirect Model List
             messages.success(request, getSuccessCreatedMessage('Vacuna'))
+            return redirect("vaccinesListView")
+        except ValidationError:
+            # Validate Unique field
+            messages.error(request, getUniqueModelError("Vacuna", name))
+        except Exception as e:
+            # Validate all posible errors
+            messages.error(request, e.args[0])
+    return render(request, 'vaccines/addOrEdit.html', context)
+
+
+""" VACCINE EDIT """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def vaccinesEditView(request, pk):
+    # Get vaccine to edit
+    vaccine = Vaccine.objects.get(pk=pk)
+    # Init Context
+    vaccineForm = VaccineForm()
+    vaccineForm.updateValues(vaccine)
+    context = {"vaccine": vaccineForm}
+    # Render User Form
+    if request.method == 'POST':
+        # Get data from template
+        name = request.POST.get("val_name")
+        healthPersonnel = request.POST.get("val_healthPersonnel")
+        canConsultingRoom = request.POST.get("val_canConsultingRoom")
+        canSchool = request.POST.get("val_canSchool")
+        # Update context
+        context['vaccine'].name = name
+        context['vaccine'].healthPersonnel = healthPersonnel
+        context['vaccine'].canConsultingRoom = canConsultingRoom
+        context['vaccine'].canSchool = canSchool
+        try:
+            # Validate boolean fields
+            if [healthPersonnel, canConsultingRoom, canSchool].count('on') in [3, 2, 0]:
+                raise Exception(getOnlyOneBoolError())
+            # Update Model
+            vaccine.name = name
+            vaccine.healthPersonnel = healthPersonnel == 'on'
+            vaccine.canConsultingRoom = canConsultingRoom == 'on'
+            vaccine.canSchool = canSchool == 'on'
+            vaccine.save()
+            # Redirect Model List
+            messages.success(request, getSuccessEditMessage('Vacuna'))
             return redirect("vaccinesListView")
         except ValidationError:
             # Validate Unique field
