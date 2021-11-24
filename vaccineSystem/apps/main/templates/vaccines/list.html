@@ -87,7 +87,7 @@
                     <td class="text-center">
                         <div class="btn-group">
                             <!-- Edit Button -->
-                            <a href="#" data-toggle="tooltip" title="Editar Vacuna" class="btn btn-xs btn-default"
+                            <a href="{% url 'vaccinesEditView' pk=vac.pk %}" data-toggle="tooltip" title="Editar Vacuna" class="btn btn-xs btn-default"
                                 style="margin-top: 4px;"><i class="fa fa-pencil"></i>
                             </a>
                             <!-- Delete Button -->
