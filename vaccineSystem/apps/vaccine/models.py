@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Vaccine(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     healthPersonnel = models.BooleanField(default=False)
     canConsultingRoom = models.BooleanField(default=False)
     canSchool = models.BooleanField(default=False)
@@ -17,3 +17,7 @@ class Vaccine(models.Model):
             return 'Es por consultorio'
         else:
             return 'Es por escuela'
+
+    def save(self, *args, **kwargs):
+        self.validate_unique()
+        super(Vaccine, self).save(*args, **kwargs)
