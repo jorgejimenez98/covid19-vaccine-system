@@ -53,7 +53,7 @@
     <form id="form-validation" action="{% if con.id is None %} 
                     {% url 'consultRoomAddView' %} 
                 {% else %} 
-                #
+                {% url 'consultRoomEditView' pk=con.id %}
                 {% endif %}" method="post" class="form-horizontal form-bordered">
         {% csrf_token %}
         <fieldset>
