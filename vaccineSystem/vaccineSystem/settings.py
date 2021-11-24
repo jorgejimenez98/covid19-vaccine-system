@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "apps.main",
     "apps.users",
     "apps.locality",
+    "apps.vaccine",
 ]
 
 MIDDLEWARE = [
