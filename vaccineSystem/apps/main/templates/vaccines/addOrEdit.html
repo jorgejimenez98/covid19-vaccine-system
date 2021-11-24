@@ -1,0 +1,138 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load template_tags %}
+
+{% block mainblock %}
+
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Vacunas<br>
+            <small>
+                Formulario para {% if vaccine.id is None %} insertar {% else %} editar {% endif %} Vacunas al
+                sistema
+            </small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Tabla</li>
+    <li><a href="{% url 'vaccinesListView' %}">Vacunas</a></li>
+    <li>{% if vaccine.id is None %} Insertar {% else %} Editar {% endif %}</li>
+</ul>
+<!-- END Datatables Header -->
+
+<!-- Error Message Section -->
+{% if messages %}
+{% for message in messages %}
+<div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} 
+                      alert-danger 
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+                      alert-success 
+                    {% endif %} p-2 alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+<!-- End Error Message Section -->
+
+
+<!-- Form Validation Example Block -->
+<div class="block">
+    <!-- Form Validation Example Title -->
+    <div class="block-title">
+        <h2><strong>Formulario de Vacunas</strong></h2>
+    </div>
+    <!-- END Form Validation Example Title -->
+
+    <!-- Form Validation Example Content -->
+    <form id="form-validation" action="{% if vaccine.id is None %} 
+                    {% url 'vaccinesAddView' %} 
+                {% else %} 
+                #
+                {% endif %}" method="post" class="form-horizontal form-bordered">
+        {% csrf_token %}
+        <fieldset>
+
+            <!-- NAME -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="val_name">Nombre <span class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" id="val_name" name="val_name" value="{{ vaccine.name }}" class="form-control"
+                            placeholder="Escribe aquí el nombre..">
+                        <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pl-4 pr-4">
+                <div class="col-md-4">
+                    <!-- Health perssoneel -->
+                    <div class="form-group">
+                        <label class="col-md-8 control-label">Es para el personal de Salud?
+                            <span class="text-danger">*</span></label>
+                        <div class="col-md-4">
+                            <label class="switch switch-primary" for="val_healthPersonnel">
+                                <input type="checkbox" id="val_healthPersonnel" name="val_healthPersonnel"
+                                 {% if vaccine.healthPersonnel %} checked {% endif %}>
+                                <span data-toggle="tooltip" title="Es para el personal de Salud?"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- Consulting Rooms -->
+                    <div class="form-group">
+                        <label class="col-md-8 control-label">Es para los consultorios?
+                            <span class="text-danger">*</span></label>
+                        <div class="col-md-4">
+                            <label class="switch switch-primary" for="val_canConsultingRoom">
+                                <input type="checkbox" id="val_canConsultingRoom" name="val_canConsultingRoom" 
+                                {% if vaccine.canConsultingRoom %} checked {% endif %}>
+                                <span data-toggle="tooltip" title="Es para los consultorios?"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <!-- Consulting Rooms -->
+                    <div class="form-group">
+                        <label class="col-md-8 control-label">Es para las escuelas?
+                            <span class="text-danger">*</span></label>
+                        <div class="col-md-4">
+                            <label class="switch switch-primary" for="val_canSchool">
+                                <input type="checkbox" id="val_canSchool" name="val_canSchool" 
+                                {% if vaccine.canSchool %} checked {% endif %}>
+                                <span data-toggle="tooltip" title="Es para las escuelas?"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group form-actions text-right">
+                <div class="col-md-8 col-md-offset-4">
+                    <a href="{% url 'vaccinesListView' %}" class="btn btn-sm btn-default">Cancelar</a>
+                    <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Resetear
+                        Formulario</button>
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-arrow-right"></i>
+                        {% if vaccine.id is None %} Insertar {% else %} Editar {% endif %}</button>
+                </div>
+            </div>
+    </form>
+    <!-- END Form Validation Example Content -->
+
+</div>
+
+
+
+{% endblock%}
+{% block footerblock%}
+<script src="{% static 'js/validators/vaccineValidator.js' %}"></script>
+<script>$(function () { FormsValidation.init(); });</script>
+{% endblock%}
