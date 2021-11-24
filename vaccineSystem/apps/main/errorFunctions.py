@@ -29,3 +29,9 @@ def getDelSuccessText(type: str, name: str) -> str:
 
 def getDelProtectText(type: str, name: str) -> str:
     return f'No se puede eliminar la {type} ({name}) porque otras entidades dependen de él'
+
+def getUniqueModelError(type: str, name: str) -> str:
+    return f'Ya existe una {type} con el nombre ({name})'
+
+def getOnlyOneBoolError() -> str:
+    return "Debes seleccionar solo un tipo de disponibilidad"
