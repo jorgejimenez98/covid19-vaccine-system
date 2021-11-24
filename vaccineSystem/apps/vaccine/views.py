@@ -1,5 +1,6 @@
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
+from django.db.models import ProtectedError
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -108,3 +109,24 @@ def vaccinesEditView(request, pk):
             # Validate all posible errors
             messages.error(request, e.args[0])
     return render(request, 'vaccines/addOrEdit.html', context)
+
+
+""" VACCINE DELETE """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='ADMIN', error_url='/403')
+def vaccinesDeleteView(request, pk):
+    # Get School from template
+    vaccine = Vaccine.objects.get(pk=pk)
+    try:
+        # Delete Vaccine
+        vaccine.delete()
+        # Redirect MUN List
+        message = getDelSuccessText('Vacuna', vaccine.name)
+        messages.success(request, message)
+    except ProtectedError:
+        # Send error Message
+        message = getDelProtectText('Vacuna', vaccine.name)
+        messages.error(request, message)
+    return redirect("vaccinesListView")
