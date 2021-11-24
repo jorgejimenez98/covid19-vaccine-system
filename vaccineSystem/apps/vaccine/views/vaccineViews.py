@@ -4,10 +4,10 @@ from django.db.models import ProtectedError
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .formClass import VaccineForm
-from ..main.decorators import checkUserAccess
-from ..main.errorFunctions import *
-from .models import Vaccine
+from apps.main.decorators import checkUserAccess
+from apps.main.errorFunctions import *
+from ..models import Vaccine
+from ..formClass import VaccineForm
 
 
 """ VACCINE LIST """
