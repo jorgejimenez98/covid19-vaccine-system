@@ -1,4 +1,16 @@
 var FormsValidation = (function () {
+  /* Trim Values */
+
+  $.each($.validator.methods, function (key, value) {
+    $.validator.methods[key] = function () {
+      if (arguments.length > 0) {
+        arguments[0] = $.trim(arguments[0]);
+      }
+
+      return value.apply(this, arguments);
+    };
+  });
+
   $.validator.addMethod(
     "noEmptySpaces",
     function (value) {
