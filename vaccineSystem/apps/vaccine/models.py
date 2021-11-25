@@ -1,4 +1,5 @@
 from django.db import models
+from ..people.models import People
 
 
 class Vaccine(models.Model):
@@ -21,3 +22,15 @@ class Vaccine(models.Model):
     def save(self, *args, **kwargs):
         self.validate_unique()
         super(Vaccine, self).save(*args, **kwargs)
+
+
+""" Vaccination """
+
+
+class Vaccination(models.Model):
+    people = models.ForeignKey(People, on_delete=models.PROTECT, related_name='vaccinations')
+    vaccine = models.ForeignKey(Vaccine, on_delete=models.PROTECT, related_name='vac_vaccinations')
+    adverse_reactions = models.TextField()
+    
+
+
