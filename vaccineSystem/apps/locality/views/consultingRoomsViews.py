@@ -13,7 +13,7 @@ from ..models import ConsultingRoom, Polyclinic
 
 
 @login_required(login_url='/login')
-@checkUserAccess(rol='ADMIN', error_url='/403')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
 def consultingRoomListView(request):
     # Init Context
     context = {"consults": ConsultingRoom.objects.all().order_by('-pk')}
@@ -25,7 +25,7 @@ def consultingRoomListView(request):
 
 
 @login_required(login_url='/login')
-@checkUserAccess(rol='ADMIN', error_url='/403')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
 def consultRoomAddView(request):
     # Init Context
     context = {
@@ -59,7 +59,7 @@ def consultRoomAddView(request):
 
 
 @login_required(login_url='/login')
-@checkUserAccess(rol='ADMIN', error_url='/403')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
 def consultRoomEditView(request, pk):
     con = ConsultingRoom.objects.get(pk=pk)
     # Init Context
@@ -93,7 +93,7 @@ def consultRoomEditView(request, pk):
 
 
 @login_required(login_url='/login')
-@checkUserAccess(rol='ADMIN', error_url='/403')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
 def consultRoomDeleteView(request, pk):
     # Get Data from template
     consultingRoom = ConsultingRoom.objects.get(pk=pk)
