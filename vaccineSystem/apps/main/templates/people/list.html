@@ -42,7 +42,8 @@
 <div class="block full">
     <div class="block-title">
         <h2>Listado de <strong>Usuarios</strong> ({{persons.count}})</h2>
-        <a href="{% url 'peopleAddView' %}" class="btn btn-primary" style="float: right; margin: 5px; padding-bottom: 3px;">
+        <a href="{% url 'peopleAddView' %}" class="btn btn-primary"
+            style="float: right; margin: 5px; padding-bottom: 3px;">
             Insertar Persona
         </a>
     </div>
@@ -88,13 +89,13 @@
                     <td class="text-center">
                         <h5>
                             {% if per.positive_pcr is not None %}
-                                {% if per.positive_pcr %} 
-                                    SI - {{ per.date_pcr|date:"SHORT_DATE_FORMAT" }}
-                                {% else %}
-                                    No registrado
-                                {%  endif %}
+                            {% if per.positive_pcr %}
+                            SI - {{ per.date_pcr|date:"SHORT_DATE_FORMAT" }}
                             {% else %}
-                                No registrado
+                            No registrado
+                            {% endif %}
+                            {% else %}
+                            No registrado
                             {% endif %}
                         </h5>
                     </td>
@@ -102,13 +103,19 @@
                     <td class="text-center">
                         <div class="btn-group">
                             <!-- Edit Button -->
+                            <a href="{% url 'personVaccinesList' pk=per.ci %}" data-toggle="tooltip" title="Gestionar Vacunaciones de {{ per.name }}"
+                                class="btn btn-xs btn-default" style="margin: 4px 10px 0 0;"><i class="fa fa-user"></i>
+                                Vacunaciones
+                            </a>
+                            <!-- Edit Button -->
                             <a href="{% url 'peopleEditView' pk=per.ci %}" data-toggle="tooltip" title="Edit Persona"
                                 class="btn btn-xs btn-default" style="margin-top: 4px;"><i class="fa fa-pencil"></i>
                             </a>
                             <!-- Delete Button -->
                             <div data-toggle="tooltip" title="Eliminar Persona" class="btn btn-xs">
                                 <button type="button" data-toggle="modal" data-target="#exampleModalCenter"
-                                    data-whatever="{{ per.name }} {{ per.last_names }},{{ per.pk }}" class="btn btn-xs btn-danger">
+                                    data-whatever="{{ per.name }} {{ per.last_names }},{{ per.pk }}"
+                                    class="btn btn-xs btn-danger">
                                     <i class="fa fa-trash-o"></i>
                                 </button>
                             </div>
