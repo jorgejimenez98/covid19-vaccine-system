@@ -44,7 +44,7 @@ def peopleAddView(request):
         val_consultId = request.POST.get('val_consult')
         val_prc_possitive = request.POST.get('val_prc_possitive') == 'on'
         val_date_prc = request.POST.get('val_date_prc')
-        # Update context 
+        # Update context
         context['person'].ci = val_ci
         context['person'].name = val_name
         context['person'].last_names = val_last_names
@@ -57,12 +57,11 @@ def peopleAddView(request):
         # Try execpt
         try:
             # Validate pcr and date
-            print(val_prc_possitive)
             if val_prc_possitive and val_date_prc == '':
                 raise Exception(getNoDatePcr())
             elif not val_prc_possitive and val_date_prc != '':
                 raise Exception(getNoPcrSelect())
-            # Create Person 
+            # Create Person
             People.objects.create(
                 ci=val_ci,
                 name=val_name,
@@ -70,14 +69,16 @@ def peopleAddView(request):
                 sex=val_sex,
                 age=int(val_age),
                 address=val_adress,
-                consulting_room=ConsultingRoom.objects.get(pk=int(val_consultId)),
+                consulting_room=ConsultingRoom.objects.get(
+                    pk=int(val_consultId)),
                 positive_pcr=val_prc_possitive,
-                date_pcr=None if val_date_prc == '' else getDateFromString(val_date_prc)
+                date_pcr=None if val_date_prc == '' else getDateFromString(
+                    val_date_prc)
             )
-            # Render to list after create 
+            # Render to list after create
             messages.success(request, getSuccessCreatedMessage("Persona"))
             return redirect('peopleListView')
-        except ValidationError:  
+        except ValidationError:
             # Validate Unique CI
             messages.error(request, getUniqueCIError("Persona", 'CI'))
         except Exception as e:
@@ -85,3 +86,18 @@ def peopleAddView(request):
             messages.error(request, e.args[0])
     # Render Form
     return render(request, 'people/addOrEdit.html', context)
+
+
+""" DELETE PERSON """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
+def peopleDeleteView(request, pk):
+    people = People.objects.get(pk=pk)
+    try:
+        people.delete()
+        messages.success(request, getDelSuccessText("Persona", people.name))
+    except ProtectedError:
+        messages.error(request, getDelProtectText("Persona", people.name))
+    return redirect('peopleListView')
