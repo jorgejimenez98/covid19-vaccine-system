@@ -88,6 +88,71 @@ def peopleAddView(request):
     return render(request, 'people/addOrEdit.html', context)
 
 
+""" EDIT PERSON """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
+def peopleEditView(request, pk):
+    # Init Context
+    person = People.objects.get(ci=pk)
+    personForm = PersonForm()
+    personForm.updateValues(person)
+    context = {
+        "person": personForm,
+        "consults": ConsultingRoom.objects.all()
+    }
+    if request.method == 'POST':
+        # Get data from template
+        val_ci = request.POST.get('val_ci')
+        val_name = request.POST.get('val_name')
+        val_last_names = request.POST.get('val_last_names')
+        val_sex = request.POST.get('val_sex')
+        val_age = request.POST.get('val_age')
+        val_adress = request.POST.get('val_adress')
+        val_consultId = request.POST.get('val_consult')
+        val_prc_possitive = request.POST.get('val_prc_possitive') == 'on'
+        val_date_prc = request.POST.get('val_date_prc')
+        # Update context
+        context['person'].ci = val_ci
+        context['person'].name = val_name
+        context['person'].last_names = val_last_names
+        context['person'].sex = val_sex
+        context['person'].age = val_age
+        context['person'].address = val_adress
+        context['person'].consulting_room_id = val_consultId
+        context['person'].positive_pcr = val_prc_possitive
+        context['person'].date_pcr = val_date_prc
+        # Try execpt
+        try:
+            # Validate pcr and date
+            if val_prc_possitive and val_date_prc == '':
+                raise Exception(getNoDatePcr())
+            elif not val_prc_possitive and val_date_prc != '':
+                raise Exception(getNoPcrSelect())
+            # Update Person Values
+            person.name = val_name
+            person.last_names = val_last_names
+            person.sex = val_sex
+            person.age = int(val_age)
+            person.address = val_adress
+            person.consulting_room = ConsultingRoom.objects.get(pk=int(val_consultId))
+            person.positive_pcr = val_prc_possitive
+            person.date_pcr = None if val_date_prc == '' else getDateFromString(val_date_prc)
+            person.save()
+            # Render to list after create
+            messages.success(request, getSuccessEditMessage("Persona"))
+            return redirect('peopleListView')
+        except ValidationError:
+            # Validate Unique CI
+            messages.error(request, getUniqueCIError("Persona", 'CI'))
+        except Exception as e:
+            # Manage All posible Errors
+            messages.error(request, e.args[0])
+    # Render Form
+    return render(request, 'people/addOrEdit.html', context)
+
+
 """ DELETE PERSON """
 
 
