@@ -50,24 +50,26 @@
     <!-- END Form Validation Example Title -->
 
     <!-- Form Validation Example Content -->
-    <form id="form-validation" action="{% if person.ci is None %} {% url 'peopleAddView' %} {% else %} # {% endif %}"
+    <form id="form-validation" action="{% if person.ci is None %} {% url 'peopleAddView' %} {% else %} {% url 'peopleEditView' pk=person.ci %} {% endif %}"
         method="post" class="form-horizontal form-bordered">
         {% csrf_token %}
         <fieldset>
 
             <!-- CI -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="val_ci">Carnet de Identidad<span
-                        class="text-danger">*</span></label>
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <input type="text" id="val_ci" name="val_ci"
-                            value="{% if person.ci is not None %} {{ person.ci }} {% endif %}" class="form-control"
-                            placeholder="Escribe aquí el ci..">
-                        <span class="input-group-addon"><i class="gi gi-user"></i></span>
+            {% if person.ci is None %}
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="val_ci">Carnet de Identidad<span
+                            class="text-danger">*</span></label>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" id="val_ci" name="val_ci"
+                                value="{% if person.ci is not None %} {{ person.ci }} {% endif %}" class="form-control"
+                                placeholder="Escribe aquí el ci..">
+                            <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
 
             <!-- NAME -->
             <div class="form-group">
