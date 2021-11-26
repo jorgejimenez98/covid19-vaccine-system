@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
-from django.db import IntegrityError
+from django.core.exceptions import ValidationError
 from django.db.models import ProtectedError
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from ..main.decorators import checkUserAccess
 from ..main.errorFunctions import *
+from ..locality.models import ConsultingRoom
 from .models import People
+from .formClass import PersonForm
 
 
-""" Consulting Room LIST """
+""" PERSONS LIST """
 
 
 @login_required(login_url='/login')
@@ -18,3 +20,68 @@ def peopleListView(request):
     context = {"persons": People.objects.all()}
     # Render List
     return render(request, 'people/list.html', context)
+
+
+""" ADD PERSON """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
+def peopleAddView(request):
+    # Init Context
+    context = {
+        "person": PersonForm(),
+        "consults": ConsultingRoom.objects.all()
+    }
+    if request.method == 'POST':
+        # Get data from template
+        val_ci = request.POST.get('val_ci')
+        val_name = request.POST.get('val_name')
+        val_last_names = request.POST.get('val_last_names')
+        val_sex = request.POST.get('val_sex')
+        val_age = request.POST.get('val_age')
+        val_adress = request.POST.get('val_adress')
+        val_consultId = request.POST.get('val_consult')
+        val_prc_possitive = request.POST.get('val_prc_possitive') == 'on'
+        val_date_prc = request.POST.get('val_date_prc')
+        # Update context 
+        context['person'].ci = val_ci
+        context['person'].name = val_name
+        context['person'].last_names = val_last_names
+        context['person'].sex = val_sex
+        context['person'].age = val_age
+        context['person'].address = val_adress
+        context['person'].consulting_room_id = val_consultId
+        context['person'].positive_pcr = val_prc_possitive
+        context['person'].date_pcr = val_date_prc
+        # Try execpt
+        try:
+            # Validate pcr and date
+            print(val_prc_possitive)
+            if val_prc_possitive and val_date_prc == '':
+                raise Exception(getNoDatePcr())
+            elif not val_prc_possitive and val_date_prc != '':
+                raise Exception(getNoPcrSelect())
+            # Create Person 
+            People.objects.create(
+                ci=val_ci,
+                name=val_name,
+                last_names=val_last_names,
+                sex=val_sex,
+                age=int(val_age),
+                address=val_adress,
+                consulting_room=ConsultingRoom.objects.get(pk=int(val_consultId)),
+                positive_pcr=val_prc_possitive,
+                date_pcr=None if val_date_prc == '' else getDateFromString(val_date_prc)
+            )
+            # Render to list after create 
+            messages.success(request, getSuccessCreatedMessage("Persona"))
+            return redirect('peopleListView')
+        except ValidationError:  
+            # Validate Unique CI
+            messages.error(request, getUniqueCIError("Persona", 'CI'))
+        except Exception as e:
+            # Manage All posible Errors
+            messages.error(request, e.args[0])
+    # Render Form
+    return render(request, 'people/addOrEdit.html', context)
