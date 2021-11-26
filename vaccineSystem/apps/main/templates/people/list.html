@@ -82,15 +82,19 @@
                     </td>
                     <td class="text-center">
                         <h5>
-                            <span>{{ per.consulting_room.name }}</span>
+                            <span>{{ per.consulting_room.name }} | {{ per.consulting_room.polyclinic.name }}</span>
                         </h5>
                     </td>
                     <td class="text-center">
                         <h5>
                             {% if per.positive_pcr is not None %}
-                            SI - {{ per.date_pcr|date:"SHORT_DATE_FORMAT" }}
+                                {% if per.positive_pcr %} 
+                                    SI - {{ per.date_pcr|date:"SHORT_DATE_FORMAT" }}
+                                {% else %}
+                                    No registrado
+                                {%  endif %}
                             {% else %}
-                            NO
+                                No registrado
                             {% endif %}
                         </h5>
                     </td>
