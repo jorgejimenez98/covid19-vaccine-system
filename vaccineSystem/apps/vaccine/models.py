@@ -42,3 +42,8 @@ class ConsultingRoom_Vaccination(Vaccination):
 
 class School_Vaccination(Vaccination):
     school = models.ForeignKey(School, on_delete=models.PROTECT, related_name='school_vaccinations')
+
+class Doce(models.Model):
+    lot = models.CharField(max_length=255)
+    date = models.DateField(auto_now_add=True)
+    vaccination = models.ForeignKey(Vaccination, on_delete=models.PROTECT, related_name='doses')
