@@ -19,8 +19,12 @@ class PersonForm:
         self.name = people.name
         self.last_names = people.last_names
         self.sex = people.sex
+        self.age = str(people.age)
         self.address = people.address
         self.consulting_room_id = people.consulting_room.pk
         self.consulting_room_name = people.consulting_room.name
         self.positive_pcr = people.positive_pcr
         self.date_pcr = str(people.date_pcr)
+    
+    def __str__(self):
+        return str(self.__dict__)
