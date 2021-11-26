@@ -1,3 +1,5 @@
+from datetime import date
+
 def getNotExistUserError(user: str) -> str:
     return f'No existe una cuenta con el nombre de usuario ({user})'
 
@@ -33,5 +35,20 @@ def getDelProtectText(type: str, name: str) -> str:
 def getUniqueModelError(type: str, name: str) -> str:
     return f'Ya existe una {type} con el nombre ({name})'
 
+def getUniqueCIError(type: str, name: str) -> str:
+    return f'Ya existe una {type} con el CI ({name})'
+
 def getOnlyOneBoolError() -> str:
     return "Debes seleccionar solo un tipo de disponibilidad"
+
+def getNoDatePcr() -> str:
+    return "Si la persona tiene un pcr positivo debe insertar la fecha del mismo"
+
+def getNoPcrSelect() -> str:
+    return "Debes checkear el pcr positivo ya que has insertado una fecha"
+
+""" Date Funcitons """
+def getDateFromString(value: str) -> date:
+    print(value)
+    auxArray = value.split('-')
+    return date(int(auxArray[0]), int(auxArray[1]), int(auxArray[2]))
