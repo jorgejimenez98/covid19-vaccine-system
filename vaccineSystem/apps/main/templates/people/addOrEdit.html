@@ -134,7 +134,7 @@
                         class="text-danger">*</span></label>
                 <div class="col-md-6">
                     <div class="input-group">
-                        <input type="text" id="val_adress" name="val_adress" value="{{ person.adress }}"
+                        <input type="text" id="val_adress" name="val_adress" value="{{ person.address }}"
                             class="form-control" placeholder="Escribe aquí la dirección..">
                         <span class="input-group-addon"><i class="gi gi-user"></i></span>
                     </div>
@@ -151,8 +151,7 @@
                     <select id="val_consult" name="val_consult" class="form-control">
                         {% if person.ci is not None %}
                         {% for con in consults %}
-                        <option value="{{ con.id }}" {% if con|isProvinceId:person.consulting_room.pk %} selected {%
-                            endif %}>
+                        <option value="{{ con.id }}" {% if con|isProvinceId:person.consulting_room_id %} selected {% endif %}>
                             {{ con.name }} | {{ con.polyclinic.name }}
                         </option>
                         {% endfor %}
@@ -174,29 +173,25 @@
             <hr>
             <h3 class="text-center text-muted">Estos campos no son obligatorios</h3>
 
-
-            <div class="row">
+            <!-- PCR Possitive  -->
+            <div class="form-group">
+                <label class="col-md-4 control-label">Ha tenido prc positivo?
+                    <span class="text-danger">*</span></label>
                 <div class="col-md-6">
-                    <!-- PCR Possitive  -->
-                    <div class="form-group">
-                        <label class="col-md-8 control-label">Ha tenido prc positivo?
-                            <span class="text-danger">*</span></label>
-                        <div class="col-md-4">
-                            <label class="switch switch-primary" for="val_prc_possitive">
-                                <input type="checkbox" id="val_prc_possitive" name="val_prc_possitive" {% if
-                                    person.positive_pcr %} checked {% endif %}>
-                                <span data-toggle="tooltip" title="Es para las escuelas?"></span>
-                            </label>
-                        </div>
-                    </div>
+                    <label class="switch switch-primary" for="val_prc_possitive">
+                        <input type="checkbox" id="val_prc_possitive" name="val_prc_possitive" 
+                        {% if person.positive_pcr %} checked {% endif %}>
+                        <span data-toggle="tooltip" title="Es para las escuelas?"></span>
+                    </label>
                 </div>
+            </div>
+
+            <!-- Date Pcr -->
+            <div class="form-group">
+                <label class="col-md-4 control-label">Fecha prc positivo?
+                    <span class="text-danger">*</span></label>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Fecha PRC</label>
-                        <div class="col-md-6">
-                            <div id="example-datepicker-inline" class="input-datepicker" name='val_date_prc'></div>
-                        </div>
-                    </div>
+                    <input type="date" class="form-control" name="val_date_prc"  value='{{ person.date_pcr }}' id="val_date_prc">
                 </div>
             </div>
         </fieldset>
