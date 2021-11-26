@@ -15,3 +15,6 @@ class People(models.Model):
     def __str__(self):
         return f'{self.name} {self.last_names} - {self.ci}'
 
+    def save(self, *args,**kwargs):
+        self.validate_unique()
+        super(People,self).save(*args, **kwargs) 
