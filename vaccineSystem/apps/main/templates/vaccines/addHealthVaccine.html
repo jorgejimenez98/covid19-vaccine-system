@@ -1,0 +1,61 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load template_tags %}
+
+{% block mainblock %}
+
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Vacunas<br>
+            <small>
+                Formulario para {% if vaccine.id is None %} insertar {% else %} editar {% endif %} Vacunas al
+                sistema
+            </small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Tabla</li>
+    <li><a href="{% url 'vaccinesListView' %}">Vacunas</a></li>
+    <li>{% if vaccine.id is None %} Insertar {% else %} Editar {% endif %}</li>
+</ul>
+<!-- END Datatables Header -->
+
+<!-- Error Message Section -->
+{% if messages %}
+{% for message in messages %}
+<div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} 
+                      alert-danger 
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+                      alert-success 
+                    {% endif %} p-2 alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+<!-- End Error Message Section -->
+
+
+<!-- Form Validation Example Block -->
+<div class="block">
+    <!-- Form Validation Example Title -->
+    <div class="block-title">
+        <h2><strong>Formulario de Vacunas de Personal De Salud</strong></h2>
+    </div>
+    <!-- END Form Validation Example Title -->
+
+
+</div>
+
+
+
+{% endblock%}
+{% block footerblock%}
+<script src="{% static 'js/validators/vaccineValidator.js' %}"></script>
+<script>$(function () { FormsValidation.init(); });</script>
+{% endblock%}
