@@ -80,7 +80,7 @@ def peopleAddView(request):
             return redirect('peopleListView')
         except ValidationError:
             # Validate Unique CI
-            messages.error(request, getUniqueCIError("Persona", 'CI'))
+            messages.error(request, getUniqueCIError("Persona", val_ci))
         except Exception as e:
             # Manage All posible Errors
             messages.error(request, e.args[0])
@@ -95,7 +95,7 @@ def peopleAddView(request):
 @checkUserAccess(rol='SPECIALIST', error_url='/403')
 def peopleEditView(request, pk):
     # Init Context
-    person = People.objects.get(ci=pk)
+    person = People.objects.get(id=pk)
     personForm = PersonForm()
     personForm.updateValues(person)
     context = {
@@ -114,6 +114,7 @@ def peopleEditView(request, pk):
         val_prc_possitive = request.POST.get('val_prc_possitive') == 'on'
         val_date_prc = request.POST.get('val_date_prc')
         # Update context
+        context['person'].id = pk
         context['person'].ci = val_ci
         context['person'].name = val_name
         context['person'].last_names = val_last_names
@@ -131,6 +132,7 @@ def peopleEditView(request, pk):
             elif not val_prc_possitive and val_date_prc != '':
                 raise Exception(getNoPcrSelect())
             # Update Person Values
+            person.ci = val_ci
             person.name = val_name
             person.last_names = val_last_names
             person.sex = val_sex
@@ -145,7 +147,7 @@ def peopleEditView(request, pk):
             return redirect('peopleListView')
         except ValidationError:
             # Validate Unique CI
-            messages.error(request, getUniqueCIError("Persona", 'CI'))
+            messages.error(request, getUniqueCIError("Persona", val_ci))
         except Exception as e:
             # Manage All posible Errors
             messages.error(request, e.args[0])
@@ -159,7 +161,7 @@ def peopleEditView(request, pk):
 @login_required(login_url='/login')
 @checkUserAccess(rol='SPECIALIST', error_url='/403')
 def peopleDeleteView(request, pk):
-    people = People.objects.get(pk=pk)
+    people = People.objects.get(id=pk)
     try:
         people.delete()
         messages.success(request, getDelSuccessText("Persona", people.name))
