@@ -10,7 +10,7 @@
         <h1>
             <i class="fa fa-table"></i>Personas<br>
             <small>
-                Formulario para {% if person.ci is None %} insertar {% else %} editar {% endif %} personas al sistema
+                Formulario para {% if person.id is None %} insertar {% else %} editar {% endif %} personas al sistema
             </small>
         </h1>
     </div>
@@ -18,7 +18,7 @@
 <ul class="breadcrumb breadcrumb-top">
     <li>Tabla</li>
     <li><a href="{% url 'peopleListView' %}">Personas</a></li>
-    <li>{% if person.ci is None %} Insertar {% else %} Editar {% endif %}</li>
+    <li>{% if person.id is None %} Insertar {% else %} Editar {% endif %}</li>
 </ul>
 <!-- END Datatables Header -->
 
@@ -50,26 +50,25 @@
     <!-- END Form Validation Example Title -->
 
     <!-- Form Validation Example Content -->
-    <form id="form-validation" action="{% if person.ci is None %} {% url 'peopleAddView' %} {% else %} {% url 'peopleEditView' pk=person.ci %} {% endif %}"
+    <form id="form-validation"
+        action="{% if person.id is None %} {% url 'peopleAddView' %} {% else %} {% url 'peopleEditView' pk=person.id %} {% endif %}"
         method="post" class="form-horizontal form-bordered">
         {% csrf_token %}
         <fieldset>
 
             <!-- CI -->
-            {% if person.ci is None %}
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="val_ci">Carnet de Identidad<span
-                            class="text-danger">*</span></label>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <input type="text" id="val_ci" name="val_ci"
-                                value="{% if person.ci is not None %} {{ person.ci }} {% endif %}" class="form-control"
-                                placeholder="Escribe aquí el ci..">
-                            <span class="input-group-addon"><i class="gi gi-user"></i></span>
-                        </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="val_ci">Carnet de Identidad<span
+                        class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" id="val_ci" name="val_ci"
+                            value="{% if person.id is not None %} {{ person.ci }} {% endif %}" class="form-control"
+                            placeholder="Escribe aquí el ci..">
+                        <span class="input-group-addon"><i class="gi gi-user"></i></span>
                     </div>
                 </div>
-            {% endif %}
+            </div>
 
             <!-- NAME -->
             <div class="form-group">
@@ -151,7 +150,7 @@
                     <span class="text-danger">*</span></label>
                 <div class="col-md-6">
                     <select id="val_consult" name="val_consult" class="form-control">
-                        {% if person.ci is not None %}
+                        {% if person.id is not None %}
                         {% for con in consults %}
                         <option value="{{ con.id }}" {% if con|isProvinceId:person.consulting_room_id %} selected {% endif %}>
                             {{ con.name }} | {{ con.polyclinic.name }}
@@ -193,7 +192,8 @@
                 <label class="col-md-4 control-label">Fecha prc positivo?
                     <span class="text-danger">*</span></label>
                 <div class="col-md-6">
-                    <input type="date" class="form-control" name="val_date_prc"  value='{{ person.date_pcr }}' id="val_date_prc">
+                    <input type="date" class="form-control" name="val_date_prc" value='{{ person.date_pcr }}'
+                        id="val_date_prc">
                 </div>
             </div>
         </fieldset>
@@ -204,7 +204,7 @@
                 <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Resetear
                     Formulario</button>
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-arrow-right"></i>
-                    {% if person.ci is None %} Insertar {% else %} Editar {% endif %}
+                    {% if person.id is None %} Insertar {% else %} Editar {% endif %}
                     Usuario</button>
             </div>
         </div>
