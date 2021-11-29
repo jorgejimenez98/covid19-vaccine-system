@@ -103,12 +103,12 @@
                     <td class="text-center">
                         <div class="btn-group">
                             <!-- Edit Button -->
-                            <a href="{% url 'personVaccinesList' pk=per.ci %}" data-toggle="tooltip" title="Gestionar Vacunaciones de {{ per.name }}"
+                            <a href="{% url 'personVaccinesList' pk=per.pk %}" data-toggle="tooltip" title="Gestionar Vacunaciones de {{ per.name }}"
                                 class="btn btn-xs btn-default" style="margin: 4px 10px 0 0;"><i class="fa fa-user"></i>
                                 Vacunaciones
                             </a>
                             <!-- Edit Button -->
-                            <a href="{% url 'peopleEditView' pk=per.ci %}" data-toggle="tooltip" title="Edit Persona"
+                            <a href="{% url 'peopleEditView' pk=per.pk %}" data-toggle="tooltip" title="Edit Persona"
                                 class="btn btn-xs btn-default" style="margin-top: 4px;"><i class="fa fa-pencil"></i>
                             </a>
                             <!-- Delete Button -->
