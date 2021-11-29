@@ -32,8 +32,8 @@ class Vaccination(models.Model):
     people = models.ForeignKey(People, on_delete=models.PROTECT, related_name='vaccinations')
     vaccine = models.ForeignKey(Vaccine, on_delete=models.PROTECT, related_name='vac_vaccinations')
     has_adverse_reactions = models.BooleanField(default=False)
-    
 
+    
 class PersonalHealth_Vaccination(Vaccination):
     health_category = models.CharField(max_length=255)
 
