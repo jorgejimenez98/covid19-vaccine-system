@@ -1,5 +1,6 @@
 {% extends 'master.html' %}
 {% load static %}
+{% load template_tags %}
 
 {% block headBlock %}
 <link rel="stylesheet" href="{% static 'table/datatable.min.css' %}" />
@@ -11,8 +12,8 @@
 <div class="content-header">
     <div class="header-section">
         <h1>
-            <i class="fa fa-table"></i>Vacunas<br><small>Tabla para gestionar los Vacunaciones de la persona 
-               <strong> {{ person.name }} {{ person.last_names }}</strong></small>
+            <i class="fa fa-table"></i>Vacunas<br><small>Tabla para gestionar los Vacunaciones de la persona
+                <strong> {{ person.name }} {{ person.last_names }}</strong></small>
         </h1>
     </div>
 </div>
@@ -44,9 +45,10 @@
 <div class="block full">
     <div class="block-title">
         <h2>Listado de <strong>Vacunas</strong> ({{vaccines.count}})</h2>
-        <a href="#" class="btn btn-primary" style="float: right; margin: 5px; padding-bottom: 3px;">
+        <button data-toggle="modal" data-target="#exampleModalCenter1" class="btn btn-primary"
+            style="float: right; margin: 5px; padding-bottom: 3px;">
             Insertar Vacunación
-        </a>
+        </button>
     </div>
     <div class="table-responsive">
         <table id="example" class="table table-vcenter table-condensed table-bordered" cellspacing="0"
@@ -87,8 +89,8 @@
                     <td class="text-center">
                         <div class="btn-group">
                             <!-- Edit Button -->
-                            <a href="#" data-toggle="tooltip" title="Editar Vacuna"
-                                class="btn btn-xs btn-default" style="margin-top: 4px;"><i class="fa fa-pencil"></i>
+                            <a href="#" data-toggle="tooltip" title="Editar Vacuna" class="btn btn-xs btn-default"
+                                style="margin-top: 4px;"><i class="fa fa-pencil"></i>
                             </a>
                             <!-- Delete Button -->
                             <div data-toggle="tooltip" title="Eliminar Vacuna" class="btn btn-xs">
@@ -126,6 +128,42 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <a href="#" class="btn btn-primary modal-comfirm-delete">Sí, estoy seguro</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Kind Of Vaccine -->
+<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLongTitle">Escoge un tipo de vacuna a insertar a la persona</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div>
+                        <a class="btn btn-light" href="{% url 'personAddSchoolVaccine' pk=person.pk %}">
+                            Vacuna para personal de Escuelas
+                        </a>
+                    </div>
+                    <div>
+                        <a class="btn btn-light" href="{% url 'personAddConsultVaccine' pk=person.pk %}">
+                            Vacuna para Consultorios
+                        </a>
+                    </div>
+                    <div> <a class="btn btn-light" href="{% url 'personAddHealthVaccine' pk=person.pk %}">
+                            Vacuna para Personal de Salud
+                        </a></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
