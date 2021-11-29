@@ -25,3 +25,48 @@ def personVaccinesList(request, pk):
     }
     # Render to vaccine List
     return render(request, 'vaccines/personVaccines.html', context)
+
+
+""" School VACCINE ADD """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
+def personAddSchoolVaccine(request, pk):
+    person = People.objects.get(pk=pk)
+    # Init Context
+    context = {
+        "person": person,
+    }
+    # Render to vaccine List
+    return render(request, 'vaccines/addSchoolVaccine.html', context)
+
+
+""" School VACCINE ADD """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
+def personAddConsultVaccine(request, pk):
+    person = People.objects.get(pk=pk)
+    # Init Context
+    context = {
+        "person": person,
+    }
+    # Render to vaccine List
+    return render(request, 'vaccines/addConsultVaccine.html', context)
+
+
+""" Health VACCINE ADD """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
+def personAddHealthVaccine(request, pk):
+    person = People.objects.get(pk=pk)
+    # Init Context
+    context = {
+        "person": person,
+    }
+    # Render to vaccine List
+    return render(request, 'vaccines/addHealthVaccine.html', context)
