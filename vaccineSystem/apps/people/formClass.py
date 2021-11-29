@@ -2,7 +2,8 @@ from .models import People
 
 
 class PersonForm:
-    def __init__(self, ci=None, name="", last_names="", sex="", age="", address="", consulting_room_id="", consulting_room_name="", positive_pcr=False, date_pcr=""):
+    def __init__(self, id=None, ci="None", name="", last_names="", sex="", age="", address="", consulting_room_id="", consulting_room_name="", positive_pcr=False, date_pcr=""):
+        self.id = id
         self.ci = ci
         self.name = name
         self.last_names = last_names
@@ -15,6 +16,7 @@ class PersonForm:
         self.date_pcr = date_pcr
 
     def updateValues(self, people: People):
+        self.id = people.id 
         self.ci = people.ci
         self.name = people.name
         self.last_names = people.last_names
@@ -25,6 +27,6 @@ class PersonForm:
         self.consulting_room_name = people.consulting_room.name
         self.positive_pcr = people.positive_pcr
         self.date_pcr = str(people.date_pcr)
-    
+
     def __str__(self):
         return str(self.__dict__)
