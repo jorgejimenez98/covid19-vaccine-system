@@ -2,7 +2,7 @@ from django.db import models
 from ..locality.models import ConsultingRoom
 
 class People(models.Model):
-    ci = models.CharField(max_length=11, primary_key=True, unique=True)
+    ci = models.CharField(max_length=11, unique=True)
     name = models.CharField(max_length=255)
     last_names = models.CharField(max_length=255)
     sex = models.CharField(max_length=1)
