@@ -52,6 +52,5 @@ def getNoPcrSelect() -> str:
 
 """ Date Funcitons """
 def getDateFromString(value: str) -> date:
-    print(value)
     auxArray = value.split('-')
     return date(int(auxArray[0]), int(auxArray[1]), int(auxArray[2]))
