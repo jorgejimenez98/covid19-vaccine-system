@@ -29,6 +29,9 @@ def getUniqueTypeError(type: str, name: str) -> str:
 def getDelSuccessText(type: str, name: str) -> str:
     return f'{type} ({name}) eliminada satisfactoriamente'
 
+def getDeleSuccessText(type: str) -> str:
+    return f'{type} eliminada satisfactoriamente'
+
 def getDelProtectText(type: str, name: str) -> str:
     return f'No se puede eliminar la {type} ({name}) porque otras entidades dependen de él'
 
