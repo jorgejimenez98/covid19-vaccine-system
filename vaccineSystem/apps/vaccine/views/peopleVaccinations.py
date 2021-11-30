@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from apps.main.decorators import checkUserAccess
 from apps.main.errorFunctions import *
 from ..models import Vaccine, School_Vaccination, PersonalHealth_Vaccination, ConsultingRoom_Vaccination
-from ..formClass import SchoolVaccineForm, ConsultginVaccineForm
+from ..formClass import SchoolVaccineForm, ConsultginVaccineForm, HealthVaccineForm
 from apps.people.models import People
 from apps.people.formClass import PersonForm
 from apps.locality.models import School, ConsultingRoom
@@ -91,7 +91,7 @@ def personAddConsultVaccine(request, pk):
     # Init Context
     context = {
         "person": person,
-        "vaccines": Vaccine.objects.filter(canSchool=True),
+        "vaccines": Vaccine.objects.filter(canConsultingRoom=True),
         "consulting_rooms": ConsultingRoom.objects.all(),
         "vaccination": ConsultginVaccineForm()
     }
@@ -119,9 +119,7 @@ def personAddConsultVaccine(request, pk):
     # Render to vaccine List
     return render(request, 'vaccines/addConsultVaccine.html', context)
 
-""" 
-'val_vaccine': ['3'], 'val_badReaction': ['on'], 'val_school': ['2']}>
- """
+
 
 """ Health VACCINE ADD """
 
@@ -133,6 +131,29 @@ def personAddHealthVaccine(request, pk):
     # Init Context
     context = {
         "person": person,
+        "vaccines": Vaccine.objects.filter(healthPersonnel=True),
+        "vaccination": HealthVaccineForm()
     }
+    if request.method == 'POST':
+         # Get data from template 
+        valVaccineId = request.POST.get('val_vaccine')
+        valBadReactions = request.POST.get('val_badReaction') == 'on'
+        haelthCategory = request.POST.get('haelthCategory')
+        # Update Context
+        context['vaccination'].vaccineId = valVaccineId
+        context['vaccination'].badReaction = valBadReactions
+        context['vaccination'].haelthCategory = haelthCategory
+        try:
+            # Create Vaccination
+            PersonalHealth_Vaccination.objects.create(
+                people=person,
+                vaccine=Vaccine.objects.get(pk=int(valVaccineId)),
+                has_adverse_reactions=valBadReactions,
+                health_category=haelthCategory
+            )
+            messages.success(request, getSuccessCreatedMessage('Vacunacion'))
+            return redirect(f'/person/vaccines/{person.id}')
+        except Exception as e:
+            messages.error(request, e.args[0])
     # Render to vaccine List
     return render(request, 'vaccines/addHealthVaccine.html', context)
