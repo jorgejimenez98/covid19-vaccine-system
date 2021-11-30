@@ -1,0 +1,93 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load template_tags %}
+
+{% block headBlock %}
+<link rel="stylesheet" href="{% static 'table/datatable.min.css' %}" />
+<link rel="stylesheet" href="{% static 'table/responsive.datatables.min.css' %}" />
+{% endblock %}
+{% block mainblock %}
+
+<!-- Datatables Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-table"></i>Vacunas<br><small>Tabla para gestionar las dosis de la vacunacion de la persona
+                <strong> {{ person.name }} {{ person.last_names }}</strong></small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Tabla</li>
+    <li><a href="{% url 'peopleListView' %}">Personas</a></li>
+    <li><a href="{% url 'personVaccinesList' pk=person.pk  %}">Vacunaciones</a></li>
+    <li><a href="{% url 'personVaccinesDocesList' pk=person.pk vaccine=vaccine.tipoVacuna vaccineId=vaccine.pk %}">Dosis</a></li>
+    <li>Insertar Dosis</li>
+</ul>
+<!-- END Datatables Header -->
+
+<!-- Error Message Section -->
+{% if messages %}
+{% for message in messages %}
+<div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} 
+                      alert-danger 
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} 
+                      alert-success 
+                    {% endif %} p-2 alert-dismissible" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+<!-- End Error Message Section -->
+
+<!-- Datatables Content -->
+<div class="block full">
+    <div class="block-title">
+        <h2>Listado de <strong>Dosis</strong> de la vacuna {{ vaccine.name }} ({{doces.count}})</h2>
+    
+    </div>
+
+     <!-- Form Validation Example Content -->
+     <form id="form-validation"
+     action="{% url 'personVaccinesDocesAdd' pk=person.pk vaccine=vaccine.tipoVacuna vaccineId=vaccine.pk %}"
+     method="post" class="form-horizontal form-bordered">
+     {% csrf_token %}
+     <fieldset>
+
+         <!-- NAME -->
+         <div class="form-group">
+             <label class="col-md-4 control-label" for="val_name">Lote <span class="text-danger">*</span></label>
+             <div class="col-md-6">
+                 <div class="input-group">
+                     <input type="text" id="val_name" name="val_name" value=""
+                         class="form-control" placeholder="Escribe aquí el lote..">
+                     <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                 </div>
+             </div>
+         </div>
+
+     </fieldset>
+
+     <div class="form-group form-actions text-right">
+         <div class="col-md-8 col-md-offset-4">
+             <a href="{% url 'personVaccinesDocesList' pk=person.pk vaccine=vaccine.tipoVacuna vaccineId=vaccine.pk %}" class="btn btn-sm btn-default">Cancelar</a>
+             <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Resetear
+                 Formulario</button>
+             <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-arrow-right"></i>
+                Insertar </button>
+         </div>
+     </div>
+ </form>
+ <!-- END Form Validation Example Content -->
+
+</div>
+<!-- END Datatables Content -->
+
+
+
+{% endblock%}
+{% block footerblock%}
+{% endblock%}
