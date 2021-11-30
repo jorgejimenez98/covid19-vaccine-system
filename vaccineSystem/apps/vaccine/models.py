@@ -33,15 +33,29 @@ class Vaccination(models.Model):
     vaccine = models.ForeignKey(Vaccine, on_delete=models.PROTECT, related_name='vac_vaccinations')
     has_adverse_reactions = models.BooleanField(default=False)
 
+    def tipoVacuna(self):
+        return 'Vacuna'
+
     
 class PersonalHealth_Vaccination(Vaccination):
     health_category = models.CharField(max_length=255)
 
+    def tipoVacuna(self):
+        return Vaccination.tipoVacuna(self) + " Personal de Salud"
+
 class ConsultingRoom_Vaccination(Vaccination):
     consulting_rooms = models.ForeignKey(ConsultingRoom, on_delete=models.PROTECT, related_name='con_vaccinations')
 
+
+
+    def tipoVacuna(self):
+        return Vaccination.tipoVacuna(self) + " Consultorio"
+
 class School_Vaccination(Vaccination):
     school = models.ForeignKey(School, on_delete=models.PROTECT, related_name='school_vaccinations')
+
+    def tipoVacuna(self):
+        return Vaccination.tipoVacuna(self) + " Escuelas"
 
 class Doce(models.Model):
     lot = models.CharField(max_length=255)
