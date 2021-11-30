@@ -19,5 +19,6 @@ urlpatterns = [
     # Doses Views 
     path("person/vaccines/doces/<int:pk>/<str:vaccine>/<str:vaccineId>/", dviews.personVaccinesDocesList, name="personVaccinesDocesList"),
     path("person/vaccines/add/<int:pk>/<str:vaccine>/<str:vaccineId>/", dviews.personVaccinesDocesAdd, name="personVaccinesDocesAdd"),
+    path("person/vaccines/delete/<int:pk>/<str:vaccine>/<str:vaccineId>/<int:doceId>/", dviews.personVaccinesDocesDelete, name="personVaccinesDocesDelete"),
 
 ]
