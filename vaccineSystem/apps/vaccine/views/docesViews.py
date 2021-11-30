@@ -59,3 +59,15 @@ def personVaccinesDocesAdd(request, pk, vaccine, vaccineId):
         except Exception as e:
             messages.error(request, e.args[0])
     return render(request, 'vaccines/addLote.html', context)
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
+def personVaccinesDocesDelete(request, pk, vaccine, vaccineId, doceId):
+    doce = Doce.objects.get(pk=doceId)
+    try:  
+        doce.delete()
+        messages.success(request, getDeleSuccessText("Dosis"))
+    except Exception as e:
+        messages.error(request, e.args[0])
+    return redirect(f'/person/vaccines/doces/{pk}/{vaccine}/{vaccineId}/')
