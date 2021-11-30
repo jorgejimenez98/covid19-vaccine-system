@@ -10,16 +10,18 @@
         <h1>
             <i class="fa fa-table"></i>Vacunas<br>
             <small>
-                Formulario para {% if vaccine.id is None %} insertar {% else %} editar {% endif %} Vacunas al
-                sistema
+                Formulario para {% if person.id is None %} insertar {% else %} editar {% endif %} vacunas de personal
+                de consultorio para la persona {{ person.name }}
             </small>
         </h1>
     </div>
 </div>
 <ul class="breadcrumb breadcrumb-top">
     <li>Tabla</li>
-    <li><a href="{% url 'vaccinesListView' %}">Vacunas</a></li>
-    <li>{% if vaccine.id is None %} Insertar {% else %} Editar {% endif %}</li>
+    <li><a href="{% url 'peopleListView' %}">Personas</a></li>
+    <li> <a href="{% url 'personVaccinesList' pk=person.id %}">Lista de vacunaciones</a></li>
+    <li>Insertar Vacunación</li>
+
 </ul>
 <!-- END Datatables Header -->
 
@@ -45,9 +47,81 @@
 <div class="block">
     <!-- Form Validation Example Title -->
     <div class="block-title">
-        <h2><strong>Formulario de Vacunas de Personal De Salud</strong></h2>
+        <h2><strong>Formulario de Vacunas de Consultorio</strong></h2>
     </div>
     <!-- END Form Validation Example Title -->
+
+    <!-- Form Validation Example Content -->
+    <form id="form-validation" action="{% url 'personAddHealthVaccine' pk=person.id %}" method="post"
+        class="form-horizontal form-bordered">
+        {% csrf_token %}
+        <fieldset>
+
+            <!-- People -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="val_name">Persona<span class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" disabled value="{{ person.name }}  {{ person.last_names }}"
+                            class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vaccine -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="val_mun_id">
+                    Seleccione una vacuna
+                    <span class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <select id="val_vaccine" name="val_vaccine" class="form-control">
+                        <option value="">Selecciona una Vacuna</option>
+                        {% for vac in vaccines %}
+                        <option value="{{ vac.pk }}">{{ vac.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
+            <!-- Bad Reactions -->
+            <div class="form-group">
+                <label class="col-md-4 control-label">Ha tenido reacciones adversas?</label>
+                <div class="col-md-8">
+                    <label class="switch switch-primary" for="val_badReaction">
+                        <input type="checkbox" id="val_badReaction" name="val_badReaction"
+                         {% if vaccination.badReaction %} checked {% endif %}>
+                        <span data-toggle="tooltip" title="Ha tenido reacciones adversas?"></span>
+                    </label>
+                </div>
+            </div>
+
+
+             <!-- People -->
+             <div class="form-group">
+                <label class="col-md-4 control-label" for="haelthCategory">Categoria de Salud<span class="text-danger">*</span></label>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" value="{{ vaccination.health_category }}" placeholder="Escribe aquí" id="haelthCategory" name="haelthCategory"
+                            class="form-control">
+                    </div>
+                </div>
+            </div>
+        
+
+        </fieldset>
+
+        <div class="form-group form-actions text-right">
+            <div class="col-md-8 col-md-offset-4">
+                <a href="{% url 'personVaccinesList' pk=person.id %}" class="btn btn-sm btn-default">Cancelar</a>
+                <button type="reset" class="btn btn-sm btn-warning"><i class="fa fa-repeat"></i> Resetear
+                    Formulario</button>
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-arrow-right"></i>
+                    Insertar </button>
+            </div>
+        </div>
+    </form>
+    <!-- END Form Validation Example Content -->
 
 
 </div>
@@ -56,6 +130,6 @@
 
 {% endblock%}
 {% block footerblock%}
-<script src="{% static 'js/validators/vaccineValidator.js' %}"></script>
+<script src="{% static 'js/validators/schoolVaccine.js' %}"></script>
 <script>$(function () { FormsValidation.init(); });</script>
 {% endblock%}
