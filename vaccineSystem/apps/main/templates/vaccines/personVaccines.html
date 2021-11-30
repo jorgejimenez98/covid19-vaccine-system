@@ -97,9 +97,9 @@
                     <td class="text-center">
                         <div class="btn-group">
                             <!-- Delete Button -->
-                            <div data-toggle="tooltip" title="Eliminar Vacuna" class="btn btn-xs">
+                            <div data-toggle="tooltip" title="Eliminar Vacunacion" class="btn btn-xs">
                                 <button type="button" data-toggle="modal" data-target="#exampleModalCenter"
-                                    data-whatever="{{ vac.vaccine.name }},{{ vac.pk }}" class="btn btn-xs btn-danger">
+                                    data-whatever="{{ person.pk }},{{ vac.tipoVacuna }},{{ vac.pk }}" class="btn btn-xs btn-danger">
                                     <i class="fa fa-trash-o"></i>
                                 </button>
                             </div>
@@ -192,12 +192,13 @@
     $('#exampleModalCenter').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget)
         var recipient = button.data('whatever')
-        var listData = recipient.split(",")
-        var name = listData[0];
-        var vaccineId = listData[1]
+        var listData = recipient.split(",") 
+        var personId = listData[0];
+        var vaccineType = listData[1];
+        var vaccineId = listData[2];
         var modal = $(this)
-        modal.find('.modal-body-text').text('¿Seguro que desea eliminar la vacunación ' + name + '?')
-        modal.find('.modal-comfirm-delete').attr("href", "person/vaccines/" + vaccineId + "/");
+        modal.find('.modal-body-text').text('¿Seguro que desea eliminar la vacunación ?')
+        modal.find('.modal-comfirm-delete').attr("href", "/person/vaccines/delete/" + personId + "/" + vaccineType + "/" + vaccineId + "/");
     })
 </script>
 
