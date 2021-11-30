@@ -6,14 +6,26 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from apps.main.decorators import checkUserAccess
 from apps.main.errorFunctions import *
-from ..models import Vaccine, School_Vaccination
-from ..formClass import SchoolVaccineForm
+from ..models import Vaccine, School_Vaccination, PersonalHealth_Vaccination, ConsultingRoom_Vaccination
+from ..formClass import SchoolVaccineForm, ConsultginVaccineForm
 from apps.people.models import People
 from apps.people.formClass import PersonForm
-from apps.locality.models import School
+from apps.locality.models import School, ConsultingRoom
 
 """ VACCINE LIST """
 
+def getPeopleVaccinations(people):
+    vaccinations = []
+    for vac in ConsultingRoom_Vaccination.objects.all():
+        if vac.people.pk == people.pk:
+            vaccinations.append(vac)
+    for vac in PersonalHealth_Vaccination.objects.all():
+        if vac.people.pk == people.pk:
+            vaccinations.append(vac)
+    for vac in School_Vaccination.objects.all():
+        if vac.people.pk == people.pk:
+            vaccinations.append(vac)
+    return vaccinations
 
 @login_required(login_url='/login')
 @checkUserAccess(rol='SPECIALIST', error_url='/403')
@@ -22,7 +34,7 @@ def personVaccinesList(request, pk):
     # Init Context
     context = {
         "person": person,
-        "vaccines": person.vaccinations.all(),
+        "vaccines": getPeopleVaccinations(person),
     }
     # Render to vaccine List
     return render(request, 'vaccines/personVaccines.html', context)
@@ -79,10 +91,37 @@ def personAddConsultVaccine(request, pk):
     # Init Context
     context = {
         "person": person,
+        "vaccines": Vaccine.objects.filter(canSchool=True),
+        "consulting_rooms": ConsultingRoom.objects.all(),
+        "vaccination": ConsultginVaccineForm()
     }
+    if request.method == 'POST':
+         # Get data from template
+        valVaccineId = request.POST.get('val_vaccine')
+        valBadReactions = request.POST.get('val_badReaction') == 'on'
+        val_consultId = request.POST.get('val_school')
+        # Update Context
+        context['vaccination'].vaccineId = valVaccineId
+        context['vaccination'].badReaction = valBadReactions
+        context['vaccination'].consultingId = val_consultId
+        try:
+            # Create Vaccination
+            ConsultingRoom_Vaccination.objects.create(
+                people=person,
+                vaccine=Vaccine.objects.get(pk=int(valVaccineId)),
+                has_adverse_reactions=valBadReactions,
+                consulting_rooms=ConsultingRoom.objects.get(pk=int(val_consultId))
+            )
+            messages.success(request, getSuccessCreatedMessage('Vacunacion'))
+            return redirect(f'/person/vaccines/{person.id}')
+        except Exception as e:
+            messages.error(request, e.args[0])
     # Render to vaccine List
     return render(request, 'vaccines/addConsultVaccine.html', context)
 
+""" 
+'val_vaccine': ['3'], 'val_badReaction': ['on'], 'val_school': ['2']}>
+ """
 
 """ Health VACCINE ADD """
 
