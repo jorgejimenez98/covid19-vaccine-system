@@ -14,6 +14,7 @@ from apps.locality.models import School, ConsultingRoom
 
 """ VACCINE LIST """
 
+
 def getPeopleVaccinations(people):
     vaccinations = []
     for vac in ConsultingRoom_Vaccination.objects.all():
@@ -26,6 +27,7 @@ def getPeopleVaccinations(people):
         if vac.people.pk == people.pk:
             vaccinations.append(vac)
     return vaccinations
+
 
 @login_required(login_url='/login')
 @checkUserAccess(rol='SPECIALIST', error_url='/403')
@@ -96,7 +98,7 @@ def personAddConsultVaccine(request, pk):
         "vaccination": ConsultginVaccineForm()
     }
     if request.method == 'POST':
-         # Get data from template
+        # Get data from template
         valVaccineId = request.POST.get('val_vaccine')
         valBadReactions = request.POST.get('val_badReaction') == 'on'
         val_consultId = request.POST.get('val_school')
@@ -110,7 +112,8 @@ def personAddConsultVaccine(request, pk):
                 people=person,
                 vaccine=Vaccine.objects.get(pk=int(valVaccineId)),
                 has_adverse_reactions=valBadReactions,
-                consulting_rooms=ConsultingRoom.objects.get(pk=int(val_consultId))
+                consulting_rooms=ConsultingRoom.objects.get(
+                    pk=int(val_consultId))
             )
             messages.success(request, getSuccessCreatedMessage('Vacunacion'))
             return redirect(f'/person/vaccines/{person.id}')
@@ -118,7 +121,6 @@ def personAddConsultVaccine(request, pk):
             messages.error(request, e.args[0])
     # Render to vaccine List
     return render(request, 'vaccines/addConsultVaccine.html', context)
-
 
 
 """ Health VACCINE ADD """
@@ -135,7 +137,7 @@ def personAddHealthVaccine(request, pk):
         "vaccination": HealthVaccineForm()
     }
     if request.method == 'POST':
-         # Get data from template 
+        # Get data from template
         valVaccineId = request.POST.get('val_vaccine')
         valBadReactions = request.POST.get('val_badReaction') == 'on'
         haelthCategory = request.POST.get('haelthCategory')
@@ -157,3 +159,27 @@ def personAddHealthVaccine(request, pk):
             messages.error(request, e.args[0])
     # Render to vaccine List
     return render(request, 'vaccines/addHealthVaccine.html', context)
+
+
+""" Health VACCINE ADD """
+
+
+@login_required(login_url='/login')
+@checkUserAccess(rol='SPECIALIST', error_url='/403')
+def personVaccinesDelete(request, pk, vaccine, vaccineId):
+    person = People.objects.get(pk=pk)
+    try:
+        obj = None
+        if vaccine == 'VacunaPersonalSalud':
+            obj = PersonalHealth_Vaccination.objects.get(pk=int(vaccineId))
+        elif vaccine == 'VacunaConsultorio':
+            obj = ConsultingRoom_Vaccination.objects.get(pk=int(vaccineId))
+        elif vaccine == 'VacunaEscuelas':
+            obj = School_Vaccination.objects.get(pk=int(vaccineId))
+        obj.delete()
+        messages.success(request, getDeleSuccessText("Vacunacion"))
+    except ProtectedError:
+        messages.error(request, getDelProtectText("Vacunacion", person.name))
+    except Exception as e:
+        messages.error(request, e.args[0])
+    return redirect(f'/person/vaccines/{person.id}')
