@@ -39,10 +39,10 @@ var FormsValidation = (function () {
           },
           messages: {
             val_school: {
-              required: "La escuela es obligatorio",
+              required: "Es obligatorio",
             },
             val_vaccine: {
-              required: "La vacuna es obligatorio",
+              required: "Es obligatorio",
             },
           },
         });
