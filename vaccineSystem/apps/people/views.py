@@ -197,4 +197,4 @@ def peopleExportView(request):
             "SI" if person.positive_pcr is not None else "NO"
         ])
     sheet = excel.pe.Sheet(rows)
-    return excel.make_response(sheet, "csv", 'listado de personas')
+    return excel.make_response(sheet, "csv", file_name='listado de personas')
