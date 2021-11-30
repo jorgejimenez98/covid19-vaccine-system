@@ -41,7 +41,7 @@ class PersonalHealth_Vaccination(Vaccination):
     health_category = models.CharField(max_length=255)
 
     def tipoVacuna(self):
-        return Vaccination.tipoVacuna(self) + " Personal de Salud"
+        return Vaccination.tipoVacuna(self) + "PersonalSalud"
 
 class ConsultingRoom_Vaccination(Vaccination):
     consulting_rooms = models.ForeignKey(ConsultingRoom, on_delete=models.PROTECT, related_name='con_vaccinations')
@@ -49,13 +49,13 @@ class ConsultingRoom_Vaccination(Vaccination):
 
 
     def tipoVacuna(self):
-        return Vaccination.tipoVacuna(self) + " Consultorio"
+        return Vaccination.tipoVacuna(self) + "Consultorio"
 
 class School_Vaccination(Vaccination):
     school = models.ForeignKey(School, on_delete=models.PROTECT, related_name='school_vaccinations')
 
     def tipoVacuna(self):
-        return Vaccination.tipoVacuna(self) + " Escuelas"
+        return Vaccination.tipoVacuna(self) + "Escuelas"
 
 class Doce(models.Model):
     lot = models.CharField(max_length=255)
