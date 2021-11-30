@@ -18,6 +18,16 @@ from .formClass import PersonForm
 def peopleListView(request):
     # Init Context
     context = {"persons": People.objects.all()}
+    if request.method == 'POST':
+        val_edad = request.POST.get('val_edad')
+        if val_edad != '':
+            maximaEdad, minimaEdad = 0, 0
+            if '+' in val_edad:
+                context['persons'] = People.objects.filter(age__gte=60)
+            else:
+                aux = val_edad.split('-')
+                minimaEdad, maximaEdad = int(aux[0]), int(aux[1])
+                context['persons'] = People.objects.filter(age__gte=minimaEdad, age__lte=maximaEdad)
     # Render List
     return render(request, 'people/list.html', context)
 
