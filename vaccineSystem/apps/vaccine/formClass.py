@@ -39,3 +39,16 @@ class ConsultginVaccineForm:
         self.vaccineId = vaccination.vaccine.id
         self.badReaction = vaccination.has_adverse_reactions
         self.consultingId = vaccination.consulting_rooms.id
+
+class HealthVaccineForm:
+    def __init__(self, id=None, vaccineId='', badReaction=False, haelthCategory=""):
+        self.id = id
+        self.vaccineId = vaccineId
+        self.badReaction = badReaction
+        self.haelthCategory = haelthCategory
+
+    def updateValues(self, vaccination):
+        self.id = vaccination.pk
+        self.vaccineId = vaccination.vaccine.id
+        self.badReaction = vaccination.has_adverse_reactions
+        self.haelthCategory = vaccination.health_category
