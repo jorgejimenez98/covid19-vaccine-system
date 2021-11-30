@@ -8,6 +8,7 @@ from ..main.errorFunctions import *
 from ..locality.models import ConsultingRoom
 from .models import People
 from .formClass import PersonForm
+import django_excel as excel
 
 
 """ PERSONS LIST """
@@ -178,3 +179,22 @@ def peopleDeleteView(request, pk):
     except ProtectedError:
         messages.error(request, getDelProtectText("Persona", people.name))
     return redirect('peopleListView')
+
+
+""" Export to Excel """
+
+def peopleExportView(request):
+    rows = [['CI', 'Nombre', 'Apellidos', "Sexo", "Edad", "Direccion", "Consultorio", "PCR Positivo"]]
+    for person in People.objects.all():
+        rows.append([
+            person.ci,
+            person.name,
+            person.last_names,
+            person.sex,
+            person.age,
+            person.address,
+            person.consulting_room.name + " " + person.consulting_room.polyclinic.name,
+            "SI" if person.positive_pcr is not None else "NO"
+        ])
+    sheet = excel.pe.Sheet(rows)
+    return excel.make_response(sheet, "csv", 'listado de personas')
