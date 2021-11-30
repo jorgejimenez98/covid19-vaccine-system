@@ -5,6 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .errorFunctions import *
 
+# Models
+from django.contrib.auth import get_user_model
+from ..people.models import People
+from ..vaccine.models import Vaccine, School_Vaccination, ConsultingRoom_Vaccination, PersonalHealth_Vaccination
+
 
 def homeView(request):
     if not request.user.is_authenticated:
@@ -53,7 +58,16 @@ def loginView(request):
     return render(request, 'login.html', context)
 
 
+def getNumberOfVaccinations():
+    return School_Vaccination.objects.all().count() + ConsultingRoom_Vaccination.objects.all().count() + PersonalHealth_Vaccination.objects.all().count()
+
+
 @login_required(login_url='/login')
 def dashboardView(request):
-    context = {}
+    context = {
+        "users": get_user_model().objects.all().count(),
+        "persons": People.objects.all().count(),
+        "vaccines": Vaccine.objects.all().count(),
+        "vaccinations": getNumberOfVaccinations()
+    }
     return render(request, 'home.html', context)
