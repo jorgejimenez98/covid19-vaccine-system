@@ -38,6 +38,33 @@
 {% endif %}
 <!-- End Error Message Section -->
 
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <form action="{% url 'peopleListView' %}" method="post">
+                {% csrf_token %}
+                <div class="col-md-11">
+                    <div class="form-group">
+                        <label for="val_edad">Filtrar por Edad</label>
+                        <select class="form-control" name="val_edad" id="val_edad">
+                            <option value=''>Todos</option>
+                            <option value='2-10'>2-10</option>
+                            <option value='11-18'>11-18</option>
+                            <option value='19-39'>19-39</option>
+                            <option value='40-59'>40-59</option>
+                            <option value='60+'>60+</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-1" style="margin-top: 23px;">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
 <!-- Datatables Content -->
 <div class="block full">
     <div class="block-title">
@@ -103,8 +130,9 @@
                     <td class="text-center">
                         <div class="btn-group">
                             <!-- Edit Button -->
-                            <a href="{% url 'personVaccinesList' pk=per.pk %}" data-toggle="tooltip" title="Gestionar Vacunaciones de {{ per.name }}"
-                                class="btn btn-xs btn-default" style="margin: 4px 10px 0 0;"><i class="fa fa-user"></i>
+                            <a href="{% url 'personVaccinesList' pk=per.pk %}" data-toggle="tooltip"
+                                title="Gestionar Vacunaciones de {{ per.name }}" class="btn btn-xs btn-default"
+                                style="margin: 4px 10px 0 0;"><i class="fa fa-user"></i>
                                 Vacunaciones
                             </a>
                             <!-- Edit Button -->
