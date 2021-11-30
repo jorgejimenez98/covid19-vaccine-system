@@ -58,6 +58,7 @@
                     <th class="text-center">ID</th>
                     <th class="text-center">Nombre Vacuna </th>
                     <th class="text-center">Ha tenido reacciones adversas? </th>
+                    <th class="text-center">Vacuna </th>
                     <th class="text-center">Acciones</th>
                 </tr>
             </thead>
@@ -85,13 +86,16 @@
                                 </strong></span>
                         </h4>
                     </td>
+                    <td class="text-center">
+                        <h4>
+                            <span><strong>
+                                    {{ vac.tipoVacuna }}
+                                </strong></span>
+                        </h4>
+                    </td>
 
                     <td class="text-center">
                         <div class="btn-group">
-                            <!-- Edit Button -->
-                            <a href="#" data-toggle="tooltip" title="Editar Vacuna" class="btn btn-xs btn-default"
-                                style="margin-top: 4px;"><i class="fa fa-pencil"></i>
-                            </a>
                             <!-- Delete Button -->
                             <div data-toggle="tooltip" title="Eliminar Vacuna" class="btn btn-xs">
                                 <button type="button" data-toggle="modal" data-target="#exampleModalCenter"
