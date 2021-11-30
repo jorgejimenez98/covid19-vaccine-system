@@ -87,7 +87,7 @@
                             <!-- Delete Button -->
                             <div data-toggle="tooltip" title="Eliminar Dosis" class="btn btn-xs">
                                 <button type="button" data-toggle="modal" data-target="#exampleModalCenter"
-                                    data-whatever="{{ doce.pk }},{{ doce.lot }}" class="btn btn-xs btn-danger">
+                                    data-whatever="{{ person.pk }},{{ vaccine.tipoVacuna }},{{ vaccine.pk }},{{ doce.pk }}" class="btn btn-xs btn-danger">
                                     <i class="fa fa-trash-o"></i>
                                 </button>
                             </div>
@@ -147,9 +147,11 @@
         var personId = listData[0];
         var vaccineType = listData[1];
         var vaccineId = listData[2];
+        var doceId = listData[3];
         var modal = $(this)
         modal.find('.modal-body-text').text('¿Seguro que desea eliminar la vacunación ?')
-        modal.find('.modal-comfirm-delete').attr("href", "/person/vaccines/delete/" + personId + "/" + vaccineType + "/" + vaccineId + "/");
+        /* person/vaccines/delete/<int:pk>/<str:vaccine>/<str:vaccineId>/<int:doceId>/ */
+        modal.find('.modal-comfirm-delete').attr("href", "/person/vaccines/delete/" + personId + "/" + vaccineType + "/" + vaccineId + "/" + doceId + "/");
     })
 </script>
 
