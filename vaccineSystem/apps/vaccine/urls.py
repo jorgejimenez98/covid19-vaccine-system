@@ -10,6 +10,7 @@ urlpatterns = [
 
     # People Vaccines Views
     path("person/vaccines/<int:pk>", pviews.personVaccinesList, name="personVaccinesList"),
+    path("person/vaccines/delete/<int:pk>/<str:vaccine>/<str:vaccineId>/", pviews.personVaccinesDelete, name="personVaccinesDelete"),
     path("person/vaccines/add/school/<int:pk>", pviews.personAddSchoolVaccine, name="personAddSchoolVaccine"),
     path("person/vaccines/add/consult/<int:pk>", pviews.personAddConsultVaccine, name="personAddConsultVaccine"),
     path("person/vaccines/add/health/<int:pk>", pviews.personAddHealthVaccine, name="personAddHealthVaccine"),
