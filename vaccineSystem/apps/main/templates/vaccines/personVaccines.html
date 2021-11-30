@@ -96,6 +96,10 @@
 
                     <td class="text-center">
                         <div class="btn-group">
+                            <a href="{% url 'personVaccinesDocesList' pk=person.pk vaccine=vac.tipoVacuna vaccineId=vac.pk %}" data-toggle="tooltip" title="Gestionar Dosis de {{ person.name }}"
+                            class="btn btn-xs btn-default" style="margin: 4px 10px 0 0;"><i class="fa fa-user"></i>
+                            Dosis
+                        </a>
                             <!-- Delete Button -->
                             <div data-toggle="tooltip" title="Eliminar Vacunacion" class="btn btn-xs">
                                 <button type="button" data-toggle="modal" data-target="#exampleModalCenter"
@@ -174,12 +178,14 @@
 </div>
 
 
+
 {% endblock%}
 {% block footerblock%}
 
 <!-- Table -->
 <script src="{% static 'table/datatable.min.js' %}"></script>
 <script src="{% static 'table/responsive.datatable.min.js' %}"></script>
+
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
