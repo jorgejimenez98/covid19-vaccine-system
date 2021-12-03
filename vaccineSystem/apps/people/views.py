@@ -56,7 +56,7 @@ def peopleAddView(request):
         val_prc_possitive = request.POST.get('val_prc_possitive') == 'on'
         val_date_prc = request.POST.get('val_date_prc')
         # Update context
-        context['person'].ci = val_ci
+        context['person'].ci = val_ci.strip()
         context['person'].name = val_name
         context['person'].last_names = val_last_names
         context['person'].sex = val_sex
@@ -67,6 +67,8 @@ def peopleAddView(request):
         context['person'].date_pcr = val_date_prc
         # Try execpt
         try:
+            """ Validate CI """
+            validateCI(str(val_ci).strip())
             # Validate pcr and date
             if val_prc_possitive and val_date_prc == '':
                 raise Exception(getNoDatePcr())
@@ -74,7 +76,7 @@ def peopleAddView(request):
                 raise Exception(getNoPcrSelect())
             # Create Person
             People.objects.create(
-                ci=val_ci,
+                ci=val_ci.strip(),
                 name=val_name,
                 last_names=val_last_names,
                 sex=val_sex,
@@ -126,7 +128,7 @@ def peopleEditView(request, pk):
         val_date_prc = request.POST.get('val_date_prc')
         # Update context
         context['person'].id = pk
-        context['person'].ci = val_ci
+        context['person'].ci = val_ci.strip()
         context['person'].name = val_name
         context['person'].last_names = val_last_names
         context['person'].sex = val_sex
@@ -137,13 +139,15 @@ def peopleEditView(request, pk):
         context['person'].date_pcr = val_date_prc
         # Try execpt
         try:
+            """ Validate CI """
+            validateCI(str(val_ci).strip())
             # Validate pcr and date
             if val_prc_possitive and val_date_prc == '':
                 raise Exception(getNoDatePcr())
             elif not val_prc_possitive and val_date_prc != '':
                 raise Exception(getNoPcrSelect())
             # Update Person Values
-            person.ci = val_ci
+            person.ci = val_ci.strip()
             person.name = val_name
             person.last_names = val_last_names
             person.sex = val_sex
